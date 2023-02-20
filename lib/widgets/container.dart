@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:raspcandy/utils/color_util.dart';
 
 class MainContainer extends StatelessWidget {
   final Widget child;
@@ -13,9 +14,9 @@ class MainContainer extends StatelessWidget {
     return Container(
       width: screenSize.width * 0.9,
       padding: const EdgeInsets.all(30),
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(10)),
-        color: Color(0xFFEDEDED),
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.all(Radius.circular(10)),
+        color: getColor('light-gray'),
       ),
       child: child
     );

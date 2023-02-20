@@ -1,11 +1,13 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart';
+import 'dart:convert';
 
 class UserRequests{
 
-  void register(String name, String username, String email, String password) async{
+  Future<void> register(String name, String username, String email, String password) async{
     try{
       Response response = await post(
-        Uri.parse('http://localhost:3000/user/register'),
+        Uri.parse('${dotenv.get('NGROK_URL', fallback: '')}/user/register'),
         body: {
           'name': name,
           'username': username,
@@ -14,9 +16,17 @@ class UserRequests{
         }
       );
 
-      print(response);
+      Map responseMap = json.decode(response.body);
+      print(responseMap);
+
+      
     }catch(e){
-      print(e.toString());
+      print('Error: '+e.toString());
     }
   }
+
+  
+  
 }
+
+final userRequests = UserRequests();

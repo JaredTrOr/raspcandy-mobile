@@ -7,7 +7,8 @@ final _colors = <String,Color> {
   'red': Colors.red.shade400,
   'white': Colors.white,
   'black': Colors.black,
-  'green': Colors.green.shade300
+  'green': Colors.green.shade300,
+  'light-gray': const Color(0xFFEDEDED)
 };
 
 Color? getColor(String? color){
