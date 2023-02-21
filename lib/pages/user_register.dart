@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:raspcandy/providers/user_requests.dart';
+import 'package:raspcandy/providers/user_provider.dart';
+import 'package:raspcandy/utils/message_util.dart';
 import 'package:raspcandy/widgets/button.dart';
 import 'package:raspcandy/widgets/candy_dispenser.dart';
 import 'package:raspcandy/widgets/container.dart';
@@ -71,19 +72,29 @@ class _UserRegisterState extends State<UserRegister> {
           const SizedBox(height: 20,),
           InputForm(labelText: 'Contraseña', hintText: 'Ingrese su contraseña', inputController: passwordController),
           const SizedBox(height: 20,),
-          Button(text: 'Registrarse', pressedButton: (){
+          Button(text: 'Registrarse', pressedButton: () async {
+
             //Check the validation
             if(formKey.currentState!.validate()){
               print('input validation, OK!!');
 
               //Request to the backend
-              userRequests.register(
+              Map? response = await userProvider.register(
                 nameController.text.toString(),
                 usernameController.text.toString(),
                 emailController.text.toString(),
                 passwordController.text.toString()
               );
 
+              alertMessage.setAlertText(response);
+              // ignore: use_build_context_synchronously
+              alertMessage.displayMessage(context);
+
+              if(response['success']){
+                //Go to the other activity
+                // . . .
+                print('Welcome user!!');
+              }
             }
           })
         ],
