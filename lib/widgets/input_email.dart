@@ -8,6 +8,7 @@ class InputEmail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      keyboardType: TextInputType.emailAddress,
       controller: inputController,
       decoration: InputDecoration(
         labelText: 'Email',

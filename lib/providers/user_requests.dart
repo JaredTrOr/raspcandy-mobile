@@ -4,7 +4,7 @@ import 'dart:convert';
 
 class UserRequests{
 
-  Future<void> register(String name, String username, String email, String password) async{
+  Future<String> register(String name, String username, String email, String password) async{
     try{
       Response response = await post(
         Uri.parse('${dotenv.get('NGROK_URL', fallback: '')}/user/register'),
@@ -17,12 +17,13 @@ class UserRequests{
       );
 
       Map responseMap = json.decode(response.body);
-      print(responseMap);
+      return responseMap['msg'];
 
-      
     }catch(e){
       print('Error: '+e.toString());
+      return 'Hubo un error';
     }
+
   }
 
   
