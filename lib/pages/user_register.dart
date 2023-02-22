@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:raspcandy/models/User.dart';
 import 'package:raspcandy/providers/user_provider.dart';
 import 'package:raspcandy/utils/message_util.dart';
 import 'package:raspcandy/widgets/button.dart';
@@ -19,7 +21,7 @@ class UserRegister extends StatefulWidget {
 }
 
 class _UserRegisterState extends State<UserRegister> {
-  String? successMessage;
+  //String? successMessage; It's not used
   TextEditingController nameController = TextEditingController();
   TextEditingController usernameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -41,7 +43,8 @@ class _UserRegisterState extends State<UserRegister> {
                 const SizedBox(height: 20),
                 const CandyDispenserImage(width: 130),
                 const SizedBox(height: 30),
-                MainContainer(child: _registerForm())
+                MainContainer(child: _registerForm()),
+                const SizedBox(height: 30),
               ],
             ),
           ),
@@ -72,33 +75,62 @@ class _UserRegisterState extends State<UserRegister> {
           const SizedBox(height: 20,),
           InputForm(labelText: 'Contraseña', hintText: 'Ingrese su contraseña', inputController: passwordController),
           const SizedBox(height: 20,),
-          Button(text: 'Registrarse', pressedButton: () async {
-
-            //Check the validation
-            if(formKey.currentState!.validate()){
-              print('input validation, OK!!');
-
-              //Request to the backend
-              Map? response = await userProvider.register(
-                nameController.text.toString(),
-                usernameController.text.toString(),
-                emailController.text.toString(),
-                passwordController.text.toString()
-              );
-
-              alertMessage.setAlertText(response);
-              // ignore: use_build_context_synchronously
-              alertMessage.displayMessage(context);
-
-              if(response['success']){
-                //Go to the other activity
-                // . . .
-                print('Welcome user!!');
-              }
-            }
-          })
+          Button(text: 'Registrarse', pressedButton: _registerButton),
+          const SizedBox(height: 20,),
+          const Text('¿Ya tienes una cuenta?', style: TextStyle(fontSize: 15)),
+          TextButton(
+            onPressed: (){
+              //Go to login page  
+              Navigator.pushNamed(context, 'user_login');
+            }, 
+            child: const Text('Iniciar sesión')
+          )
         ],
       ),
     );
+  }
+
+  _registerButton() async {
+
+    //Check the validation
+    if (formKey.currentState!.validate()) {
+      print('input validation, OK!!');
+
+      showDialog(
+        context: context,
+        builder: (context) {
+          return const Center(child: CircularProgressIndicator());
+        }
+      );
+
+      //Request to the backend
+      Map? response = await userProvider.register(
+        nameController.text.toString(),
+        usernameController.text.toString(),
+        emailController.text.toString(),
+        passwordController.text.toString()
+      );
+
+      // ignore: use_build_context_synchronously
+      Navigator.of(context).pop();
+
+      //Set the alert messages
+      alertMessage.setAlertText(response);
+      // ignore: use_build_context_synchronously
+      alertMessage.displayMessage(context);
+
+      //Add validation Of null because response['success'] can be null
+      if(response.isNotEmpty){
+        if (response['success']) {
+          //Go to the other activity
+          // . . . MQTT
+          print('Welcome user!!');
+          final user = response['user'];
+          // ignore: use_build_context_synchronously
+          Navigator.pushNamed(context, 'user_home');
+        }
+      }
+      
+    }
   }
 }

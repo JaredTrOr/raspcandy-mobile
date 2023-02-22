@@ -39,7 +39,7 @@ class AlertMessageUtil {
       image = 'error';
       title = 'Error';
       color = 'red';
-      content = 'Error fatal, pide ayuda aaa';
+      content = 'Hubo un error en la operación';
     }
 
     

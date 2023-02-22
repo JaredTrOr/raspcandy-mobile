@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:raspcandy/pages/admin_login.dart';
+import 'package:raspcandy/pages/user/user_home.dart';
 import 'package:raspcandy/pages/user_login.dart';
 import 'package:raspcandy/pages/user_register.dart';
-
 
 Future<void> main() async{
   await dotenv.load(fileName: '.env');
@@ -23,9 +23,15 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: 'user_register',
       routes: {
+        //Public pages
         'user_register':(context) => const UserRegister(),
         'user_login':(context) => const UserLogin(),
-        'admin_login': (context) => const AdminLogin()
+        'admin_login': (context) => const AdminLogin(),
+
+        //User pages
+        'user_home.dart': (context) => const UserHome()
+
+        //Admin pages
       },
 
     );
