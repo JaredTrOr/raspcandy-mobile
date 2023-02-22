@@ -30,6 +30,8 @@ class AlertMessage extends StatelessWidget {
         TextButton(
           onPressed: (){
             Navigator.of(context).pop();
+            //Go to another activity
+            //Check if there is gonna open another activity or is just gonna close the alert
           },
           child: const Text('Cerrar'),
         )

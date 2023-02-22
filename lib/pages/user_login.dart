@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:raspcandy/providers/user_provider.dart';
 import 'package:raspcandy/widgets/logo.dart';
 
+import '../utils/message_util.dart';
 import '../widgets/button.dart';
 import '../widgets/candy_dispenser.dart';
 import '../widgets/container.dart';
@@ -76,7 +78,38 @@ class _UserLoginState extends State<UserLogin> {
     );
   }
 
-  _loginButton(){
+  _loginButton() async {
+    if (formKey.currentState!.validate()) {
+      print('input validation, OK!!');
 
+      showDialog(
+        context: context,
+        builder: (context) {
+          return const Center(child: CircularProgressIndicator());
+        }
+      );
+
+      Map? response = await userProvider.login(usernameController.text.toString(), passwordController.text.toString());
+
+       // ignore: use_build_context_synchronously
+      Navigator.of(context).pop();
+
+      //Set the alert messages
+      alertMessage.setAlertText(response);
+      // ignore: use_build_context_synchronously
+      alertMessage.displayMessage(context);
+
+      //Add validation Of null because response['success'] can be null
+      if(response.isNotEmpty){
+        if (response['success']) {
+          //Go to the other activity
+          // . . . MQTT
+          print('Welcome user!!');
+          final user = response['user'];
+          // ignore: use_build_context_synchronously
+          //Navigator.pushNamed(context, 'user_home');
+        }
+      }
+    }
   }
 }

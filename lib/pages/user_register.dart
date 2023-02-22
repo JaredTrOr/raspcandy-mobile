@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:raspcandy/models/User.dart';
 import 'package:raspcandy/providers/user_provider.dart';
 import 'package:raspcandy/utils/message_util.dart';
 import 'package:raspcandy/widgets/button.dart';
