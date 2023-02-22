@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
         'admin_login': (context) => const AdminLogin(),
 
         //User pages
-        'user_home.dart': (context) => const UserHome()
+        'user_home': (context) => const UserHome()
 
         //Admin pages
       },

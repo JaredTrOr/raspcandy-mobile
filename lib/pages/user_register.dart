@@ -9,6 +9,7 @@ import 'package:raspcandy/widgets/container.dart';
 import 'package:raspcandy/widgets/input.dart';
 import 'package:raspcandy/widgets/input_email.dart';
 import 'package:raspcandy/widgets/input_name.dart';
+import 'package:raspcandy/widgets/input_password.dart';
 
 import '../widgets/logo.dart';
 
@@ -73,7 +74,7 @@ class _UserRegisterState extends State<UserRegister> {
           const SizedBox(height: 20,),
           InputEmail(inputController: emailController),
           const SizedBox(height: 20,),
-          InputForm(labelText: 'Contraseña', hintText: 'Ingrese su contraseña', inputController: passwordController),
+          InputPassword(inputController: passwordController),
           const SizedBox(height: 20,),
           Button(text: 'Registrarse', pressedButton: _registerButton),
           const SizedBox(height: 20,),
@@ -127,7 +128,7 @@ class _UserRegisterState extends State<UserRegister> {
           print('Welcome user!!');
           final user = response['user'];
           // ignore: use_build_context_synchronously
-          Navigator.pushNamed(context, 'user_home');
+          //Navigator.pushNamed(context, 'user_home');
         }
       }
       
