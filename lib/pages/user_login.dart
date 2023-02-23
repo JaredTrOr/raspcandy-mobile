@@ -73,6 +73,13 @@ class _UserLoginState extends State<UserLogin> {
               Navigator.pushReplacementNamed(context, 'user_register');
             }, 
             child: const Text('Registrarse')
+          ),
+          TextButton(
+            onPressed: (){
+              //Go register page
+              Navigator.pushReplacementNamed(context, 'admin_login');
+            }, 
+            child: const Text('Iniciar sesión como administrador')
           )
         ],
       ),
@@ -99,12 +106,11 @@ class _UserLoginState extends State<UserLogin> {
       alertMessage.setAlertText = response;
       // ignore: use_build_context_synchronously
       alertMessage.displayMessage(context , () {
-        print('function running');
         if(response.isNotEmpty){
           if (response['success']) {
             print('Response succesfuly');
             Map userResponse = response['user'];
-            user.setData(
+            userData.setData(
               userResponse['_id'], 
               userResponse['name'],
               userResponse['username'], 

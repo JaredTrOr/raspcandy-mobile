@@ -84,7 +84,14 @@ class _UserRegisterState extends State<UserRegister> {
               Navigator.pushReplacementNamed(context, 'user_login');
             }, 
             child: const Text('Iniciar sesión')
-          )
+          ),
+          TextButton(
+            onPressed: (){
+              //Go register page
+              Navigator.pushReplacementNamed(context, 'admin_login');
+            }, 
+            child: const Text('Iniciar sesión como administrador')
+          ),
         ],
       ),
     );
@@ -118,7 +125,13 @@ class _UserRegisterState extends State<UserRegister> {
       alertMessage.setAlertText = response;
       alertMessage.setResponse = response;
       // ignore: use_build_context_synchronously
-      alertMessage.displayMessage(context, (){});      
+      alertMessage.displayMessage(context, (){
+        if(response.isNotEmpty) {
+          if (response['success']) {
+            Navigator.pushReplacementNamed(context, 'user_login');
+          }
+        }
+      });      
     }
   }
 }

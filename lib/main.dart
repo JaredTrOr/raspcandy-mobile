@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:raspcandy/pages/admin/admin_home.dart';
 import 'package:raspcandy/pages/admin_login.dart';
 import 'package:raspcandy/pages/user/user_home.dart';
 import 'package:raspcandy/pages/user_login.dart';
@@ -29,9 +30,10 @@ class MyApp extends StatelessWidget {
         'admin_login': (context) => const AdminLogin(),
 
         //User pages
-        'user_home': (context) => const UserHome()
+        'user_home': (context) => const UserHome(),
 
         //Admin pages
+        'admin_home':(context) => const AdminHome(),
       },
 
     );
