@@ -3,11 +3,12 @@ import '../widgets/alert_message.dart';
 
 class AlertMessageUtil {
   String image = '';
-  String title = 'llamen a Dios';
+  String title = '';
   String content = '';
   String color = '';
+  Map? response; //Set response (still in check)
 
-  void displayMessage(BuildContext context) {
+  void displayMessage(BuildContext context, Function() redirect) {
     showDialog(
       context: context,
       barrierDismissible: true,
@@ -16,13 +17,18 @@ class AlertMessageUtil {
           image: image,
           title: title,
           content: content,
-          color: color
+          color: color,
+          redirect: redirect,
         );
       }
     );
   }
 
-  void setAlertText(Map response) {
+  set setResponse(Map response){
+    this.response = response;
+  }
+
+  set setAlertText(Map response) {
     if (response.isNotEmpty) {
       if (response['success']) {
         image = 'success';

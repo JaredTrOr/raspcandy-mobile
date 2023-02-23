@@ -7,8 +7,10 @@ class AlertMessage extends StatelessWidget {
   final String content;
   final String image;
   final String color;
+  final Function() redirect;
+  //final Map? response; //Optional attribute
 
-  const AlertMessage({super.key, required this.title, required this.content, required this.image, required this.color});
+  const AlertMessage({super.key, required this.title, required this.content, required this.image, required this.color, required this.redirect});
 
   @override
   Widget build(BuildContext context) {
@@ -30,8 +32,7 @@ class AlertMessage extends StatelessWidget {
         TextButton(
           onPressed: (){
             Navigator.of(context).pop();
-            //Go to another activity
-            //Check if there is gonna open another activity or is just gonna close the alert
+            redirect(); //Execute the operation 
           },
           child: const Text('Cerrar'),
         )

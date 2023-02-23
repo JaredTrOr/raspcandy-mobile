@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:raspcandy/models/UserData.dart';
 import 'package:raspcandy/providers/user_provider.dart';
 import 'package:raspcandy/widgets/logo.dart';
 
@@ -68,8 +69,8 @@ class _UserLoginState extends State<UserLogin> {
           const Text('¿Aún no tienes una cuenta?', style: TextStyle(fontSize: 15)),
           TextButton(
             onPressed: (){
-              //Go to login page  
-              Navigator.pushNamed(context, 'user_register');
+              //Go register page
+              Navigator.pushReplacementNamed(context, 'user_register');
             }, 
             child: const Text('Registrarse')
           )
@@ -95,21 +96,25 @@ class _UserLoginState extends State<UserLogin> {
       Navigator.of(context).pop();
 
       //Set the alert messages
-      alertMessage.setAlertText(response);
+      alertMessage.setAlertText = response;
       // ignore: use_build_context_synchronously
-      alertMessage.displayMessage(context);
-
-      //Add validation Of null because response['success'] can be null
-      if(response.isNotEmpty){
-        if (response['success']) {
-          //Go to the other activity
-          // . . . MQTT
-          print('Welcome user!!');
-          final user = response['user'];
-          // ignore: use_build_context_synchronously
-          //Navigator.pushNamed(context, 'user_home');
+      alertMessage.displayMessage(context , () {
+        print('function running');
+        if(response.isNotEmpty){
+          if (response['success']) {
+            print('Response succesfuly');
+            Map userResponse = response['user'];
+            user.setData(
+              userResponse['_id'], 
+              userResponse['name'],
+              userResponse['username'], 
+              userResponse['password'], 
+              userResponse['email']
+            );
+            Navigator.pushReplacementNamed(context, 'user_home');
+          }
         }
-      }
+      });
     }
   }
 }

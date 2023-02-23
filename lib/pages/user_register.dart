@@ -80,7 +80,8 @@ class _UserRegisterState extends State<UserRegister> {
           TextButton(
             onPressed: (){
               //Go to login page  
-              Navigator.pushNamed(context, 'user_login');
+              //Navigator.pushNamed(context, 'user_login');
+              Navigator.pushReplacementNamed(context, 'user_login');
             }, 
             child: const Text('Iniciar sesión')
           )
@@ -114,22 +115,10 @@ class _UserRegisterState extends State<UserRegister> {
       Navigator.of(context).pop();
 
       //Set the alert messages
-      alertMessage.setAlertText(response);
+      alertMessage.setAlertText = response;
+      alertMessage.setResponse = response;
       // ignore: use_build_context_synchronously
-      alertMessage.displayMessage(context);
-
-      //Add validation Of null because response['success'] can be null
-      if(response.isNotEmpty){
-        if (response['success']) {
-          //Go to the other activity
-          // . . . MQTT
-          print('Welcome user!!');
-          final user = response['user'];
-          // ignore: use_build_context_synchronously
-          //Navigator.pushNamed(context, 'user_home');
-        }
-      }
-      
+      alertMessage.displayMessage(context, (){});      
     }
   }
 }
