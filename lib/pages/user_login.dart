@@ -80,7 +80,16 @@ class _UserLoginState extends State<UserLogin> {
               Navigator.pushReplacementNamed(context, 'admin_login');
             }, 
             child: const Text('Iniciar sesión como administrador')
+          ),
+          /*
+          TextButton(
+            onPressed: (){
+              //Go register page
+              Navigator.pushReplacementNamed(context, 'user_home');
+            }, 
+            child: const Text('Usuario home')
           )
+          */
         ],
       ),
     );
@@ -101,7 +110,7 @@ class _UserLoginState extends State<UserLogin> {
 
        // ignore: use_build_context_synchronously
       Navigator.of(context).pop();
-
+      
       //Set the alert messages
       alertMessage.setAlertText = response;
       // ignore: use_build_context_synchronously
@@ -117,6 +126,7 @@ class _UserLoginState extends State<UserLogin> {
               userResponse['password'], 
               userResponse['email']
             );
+            //Purchases
             Navigator.pushReplacementNamed(context, 'user_home');
           }
         }

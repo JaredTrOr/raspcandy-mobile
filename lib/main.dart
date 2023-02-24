@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.pink
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: 'user_register',
+      initialRoute: 'user_home',
       routes: {
         //Public pages
         'user_register':(context) => const UserRegister(),
