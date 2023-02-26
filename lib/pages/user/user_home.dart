@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:raspcandy/providers/dispenser_provider.dart';
+import 'package:raspcandy/providers/purchase_provider.dart';
 import 'package:raspcandy/utils/color_util.dart';
+import 'package:raspcandy/utils/message_util.dart';
 import 'package:raspcandy/widgets/button.dart';
 
 import '../../models/UserData.dart';
@@ -75,18 +77,34 @@ class _UserHomeState extends State<UserHome> {
     );
   }
 
-  Widget _candyButtons() {
-
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        _candyButton(0, 'assets/images/candy_option_1.png', 'Dulce 1'),
-        const SizedBox(width: 10,),
-        _candyButton(1, 'assets/images/candy_option_1.png', 'Dulce 2'),
-        const SizedBox(width: 10,),
-        _candyButton(2, 'assets/images/candy_option_1.png', 'Dulce 3'),
-      ],
+  Widget _candyButtons(){
+    return FutureBuilder(
+      future: dispenserProvider.getDispenserCandies(),
+      initialData: {},
+      builder: (BuildContext context, AsyncSnapshot<Map> snapshot) {
+        print(snapshot.data);
+        return Row(
+          children: _createCandyButtons(snapshot.data),
+        );
+      },
     );
+  }
+
+  List<Widget> _createCandyButtons(Map? candyDispenserResponse){
+    
+    List? candyDispenserList = candyDispenserResponse!['candies'];
+    List<Widget> listOfCandyButtons = [];
+
+    var i = 0;
+  
+    candyDispenserList?.forEach((candy) {
+      
+      listOfCandyButtons.add(_candyButton(i, 'assets/images/candy_option_1.png', candy['candy_name']));
+      listOfCandyButtons.add(const SizedBox(width: 10,));
+      i++;
+    });
+  
+    return listOfCandyButtons;
   }
 
   Widget _portionButtons(){
@@ -155,11 +173,33 @@ class _UserHomeState extends State<UserHome> {
   }
   
   _purchaseCandy() async {
+    //Print the values
     print('Tipo de dulce: $_candyValue');
     print('Tamaño: $_sizeValue');
 
-    //Request to see the candies
-    Map? response = await dispenserProvider.getDispenserCandies();
-    print(response);
+    showDialog(
+      context: context,
+      builder: (context) {
+        return const Center(child: CircularProgressIndicator());
+      }
+    );
+
+    //Get the candyId 
+    Map? candyIdResponse = await dispenserProvider.getDispenserCandyByPosition(_candyValue);
+    String candyId = candyIdResponse['candy']!['_id']!;
+    String candyName = candyIdResponse['candy']!['candy_name']!;
+    String size = purchaseProvider.getSize(_sizeValue);
+    String userId = userData.id.isNotEmpty ? userData.id : 'usuario anonimo';
+
+    //Make the purchase
+    Map? response = await purchaseProvider.insertPurchase(candyId ,candyName ,size, userId);    
+    // ignore: use_build_context_synchronously
+    Navigator.of(context).pop();
+
+    //Display the message
+    alertMessage.setAlertText = response;
+    // ignore: use_build_context_synchronously
+    alertMessage.displayMessage(context, () {});
+
   }
 }

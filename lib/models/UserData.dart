@@ -1,10 +1,10 @@
 class UserData{
   
-  late String id;
-  late String name;
-  late String username;
-  late String password;
-  late String email;
+  late String id = '';
+  late String name = '';
+  late String username = '';
+  late String password = '';
+  late String email = '';
 
   //Empty Constructor
   UserData();

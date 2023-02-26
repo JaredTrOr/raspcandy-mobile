@@ -17,6 +17,19 @@ class DispenserProvider{
     }
   }
 
+  Future<Map> getDispenserCandyByPosition(int position) async {
+    try{
+      Response response = await get(
+        Uri.parse('${dotenv.get('NGROK_URL', fallback: '')}/dispenser/getDispenserCandyByPosition/$position'),
+      );
+      Map responseMap = json.decode(response.body);
+      return responseMap;
+    }catch(e){
+      print('Error: '+e.toString());
+      return {};
+    }
+  }
+
 
 }
 final dispenserProvider = DispenserProvider();
