@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:raspcandy/models/UserData.dart';
+import 'package:raspcandy/providers/purchase_provider.dart';
 import 'package:raspcandy/providers/user_provider.dart';
 import 'package:raspcandy/widgets/logo.dart';
 
@@ -81,15 +82,6 @@ class _UserLoginState extends State<UserLogin> {
             }, 
             child: const Text('Iniciar sesión como administrador')
           ),
-          /*
-          TextButton(
-            onPressed: (){
-              //Go register page
-              Navigator.pushReplacementNamed(context, 'user_home');
-            }, 
-            child: const Text('Usuario home')
-          )
-          */
         ],
       ),
     );
@@ -116,19 +108,17 @@ class _UserLoginState extends State<UserLogin> {
       // ignore: use_build_context_synchronously
       alertMessage.displayMessage(context , () {
         if(response.isNotEmpty){
-          if (response['success']) {
-            print('Response succesfuly');
-            Map userResponse = response['user'];
+          if(response['success']){
+            Map? userResponse = response['user']!;
             userData.setData(
-              userResponse['_id'], 
+              userResponse!['_id'], 
               userResponse['name'],
               userResponse['username'], 
               userResponse['password'], 
               userResponse['email']
             );
-            //Purchases
             Navigator.pushReplacementNamed(context, 'user_home');
-          }
+          } 
         }
       });
     }

@@ -3,11 +3,13 @@ import '../utils/color_util.dart';
 
 class InputName extends StatelessWidget {
   final TextEditingController inputController;
-  const InputName({super.key, required this.inputController});
+  final String? initialValue;
+  const InputName({super.key, required this.inputController, this.initialValue});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      initialValue: initialValue,
       controller: inputController,
       decoration: InputDecoration(
         labelText: 'Nombre',

@@ -54,12 +54,16 @@ class _UserHomeState extends State<UserHome> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         GestureDetector(
-          child: CircleAvatar(
-            backgroundColor: Colors.pink.shade200,
-            child: const Text('JT', style: TextStyle(fontWeight: FontWeight.bold),),
+          child: Column(
+            children: [
+              const CircleAvatar(
+                backgroundImage: AssetImage('assets/images/profile.png'),
+              ),
+              Text(userData.username, style: const TextStyle(color: Colors.pink),)
+            ],
           ),
           onTap: () {
-            Navigator.pushNamed(context, 'edit_user');
+            Navigator.pushNamed(context, 'user_profile');
           },
         ),
         TextButton(

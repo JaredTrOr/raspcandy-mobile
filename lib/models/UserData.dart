@@ -1,10 +1,13 @@
 class UserData{
   
-  late String id = '';
-  late String name = '';
-  late String username = '';
-  late String password = '';
-  late String email = '';
+  String id = '';
+  String name = '';
+  String username = '';
+  String password = '';
+  String email = '';
+  String purchases= '';
+  String amountOfPurchases = '';
+  String favoriteCandy = '';
 
   //Empty Constructor
   UserData();
@@ -16,6 +19,10 @@ class UserData{
     this.password = password;
     this.email = email;
   }
+
+  set setPurchases (String purchases) {this.purchases = purchases;}
+  set setFavoriteCandy (String favoriteCandy) {this.favoriteCandy = purchases;}
+  set setAmountOfPurchases (String amountOfPurchases) {this.amountOfPurchases = amountOfPurchases;}
 
   String getId(){return id;}
   String getName(){return name;}

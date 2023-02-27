@@ -4,6 +4,30 @@ import 'package:http/http.dart';
 
 class PurchaseProvider{
 
+  Future<List> getUserPurchases(String id) async {
+    try{
+      Response response = await get(Uri.parse('${dotenv.get('NGROK_URL', fallback: '')}/purchase/getUserPurchase/$id'));
+      Map mapResponse = json.decode(response.body);
+      List candyPurchases = mapResponse['userPurchases'];
+      return candyPurchases;
+    }catch(err){
+      print('ERROR: $err');
+      return [];
+    }
+  }
+
+  Future<String> getUserAmountOfPurchases(String id) async {
+    try{
+      Response response = await get(Uri.parse('${dotenv.get('NGROK_URL', fallback: '')}/purchase/getUserAmountOfPurchases/$id'));
+      Map mapResponse = json.decode(response.body);
+      String candyPurchases = mapResponse['amountOfPurchases'].toString();
+      return candyPurchases;
+    }catch(err){
+      print('ERROR: $err');
+      return '';
+    }
+  }
+
   Future<Map> insertPurchase(String candyId,String candyName, String size, String userId) async {
     try{
       Response response = await post(
