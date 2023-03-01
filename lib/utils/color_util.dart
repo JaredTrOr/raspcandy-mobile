@@ -14,3 +14,14 @@ final _colors = <String,Color> {
 Color? getColor(String? color){
   return _colors[color];
 }
+
+String? getColorIconsHome(int? position){
+  String color = '';
+  switch(position){
+    case 0: color ='red'; break;
+    case 1: color = 'green'; break;
+    case 2: color = 'orange'; break;
+  }
+
+  return color;
+}

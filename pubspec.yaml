@@ -39,6 +39,7 @@ dependencies:
   flutter_dotenv: ^5.0.2
   font_awesome_flutter: ^10.3.0
   provider: ^6.0.5
+  flutter_tabler_icons: ^1.1.2
 
 dev_dependencies:
   flutter_test:

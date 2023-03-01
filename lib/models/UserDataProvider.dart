@@ -34,7 +34,7 @@ class UserDataProvider extends ChangeNotifier{
     notifyListeners();
   }
 
-  void deleteData(){
+  void resetData(){
     _id = '';
     _name = '';
     _username = '';

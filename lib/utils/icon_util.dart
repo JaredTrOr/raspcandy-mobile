@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'color_util.dart';
 
 final _icons = <String, IconData> {
@@ -13,7 +14,8 @@ final _icons = <String, IconData> {
   'phone': Icons.phone,
   'success': FontAwesomeIcons.circleCheck,
   'error': FontAwesomeIcons.circleXmark,
-  'alert': FontAwesomeIcons.circleExclamation
+  'alert': FontAwesomeIcons.circleExclamation,
+  'candy': TablerIcons.lollipop
 };
 
 Icon getIcon(String iconName){

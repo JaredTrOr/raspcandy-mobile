@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:raspcandy/providers/dispenser_provider.dart';
 import 'package:raspcandy/providers/purchase_provider.dart';
+import 'package:raspcandy/providers/user_provider.dart';
 import 'package:raspcandy/utils/color_util.dart';
+import 'package:raspcandy/utils/icon_util.dart';
 import 'package:raspcandy/utils/message_util.dart';
 import 'package:raspcandy/widgets/button.dart';
 
@@ -68,11 +70,15 @@ class _UserHomeState extends State<UserHome> {
           onTap: ()  => Navigator.pushNamed(context, 'user_profile'),
         ),
         TextButton(
-          onPressed: () => Navigator.pushReplacementNamed(context, 'user_login'), 
+          onPressed: () {
+            Provider.of<UserDataProvider>(context,listen: false).resetData();
+            Navigator.pushReplacementNamed(context, 'user_login');
+          }, 
           child: Text(
             'Cerrar sesión', 
             style: TextStyle(
-              color: getColor('primary')
+              color: getColor('pink'),
+              fontWeight: FontWeight.bold
             ),
           )
         )
@@ -99,7 +105,7 @@ class _UserHomeState extends State<UserHome> {
   
     candyDispenserList?.forEach((candy) {
       
-      listOfCandyButtons.add(_candyButton(i, 'assets/images/candy_option_1.png', candy['candy_name']));
+      listOfCandyButtons.add(_candyButton(i, 'candy', candy['candy_name']));
       listOfCandyButtons.add(const SizedBox(width: 10,));
       i++;
     });
@@ -133,11 +139,8 @@ class _UserHomeState extends State<UserHome> {
           child: Container(
               height: 100,
               width: 100,
-              color: _candyValue == flagValue ? Colors.pink.shade200 : Colors.transparent,
-              child: Image(
-                image: AssetImage(image),
-                width: 20.0,
-              ),
+              color: _candyValue == flagValue ? Colors.black : Colors.transparent,
+              child: getCustomIcon('candy', 60, getColorIconsHome(flagValue)!)
             ),
           ),
           const SizedBox(height: 10,),
@@ -159,7 +162,7 @@ class _UserHomeState extends State<UserHome> {
           child: Container(
               height: 100,
               width: 100,
-              color: _sizeValue == flagValue ? Colors.pink.shade200 : Colors.transparent,
+              color: _sizeValue == flagValue ? Colors.black : Colors.transparent,
               child: const Image(
                 image: AssetImage('assets/images/candy.png'),
                 width: 20.0,

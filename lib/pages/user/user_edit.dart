@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:raspcandy/models/UserDataProvider.dart';
 import 'package:raspcandy/widgets/button.dart';
+import 'package:raspcandy/widgets/container.dart';
 import 'package:raspcandy/widgets/input.dart';
 import 'package:raspcandy/widgets/input_email.dart';
 import 'package:raspcandy/widgets/input_name.dart';
@@ -33,15 +34,16 @@ class _UserEditState extends State<UserEdit> {
 
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Center(
-            child: Container(
-              padding: const EdgeInsets.all(30),
+        child: Center(
+          child: SingleChildScrollView(
+            child: MainContainer(
               child: Form(
                 key: formKey,
                 child: Column(
                   children: [
                     //Logo
+                    const Text('Editar perfil', style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),),
+                    const SizedBox(height: 30),
                     const Image(image: AssetImage('assets/images/profile.png')),
                     const SizedBox(height: 30),
                     InputName(inputController: nameController,),
