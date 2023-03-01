@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:provider/provider.dart';
 import 'package:raspcandy/pages/admin/admin_home.dart';
 import 'package:raspcandy/pages/admin_login.dart';
 import 'package:raspcandy/pages/user/user_edit.dart';
@@ -8,9 +9,20 @@ import 'package:raspcandy/pages/user/user_profile.dart';
 import 'package:raspcandy/pages/user_login.dart';
 import 'package:raspcandy/pages/user_register.dart';
 
+import 'models/UserDataProvider.dart';
+import 'models/AdministratorDataProvider.dart';
+
 Future<void> main() async{
   await dotenv.load(fileName: '.env');
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => UserDataProvider()),
+        ChangeNotifierProvider(create: (_) => AdministratorDataProvider())
+      ],
+      child: const MyApp(),
+    )
+  );
 }
 
 class MyApp extends StatelessWidget {

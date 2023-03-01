@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:raspcandy/models/UserData.dart';
-import 'package:raspcandy/providers/purchase_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:raspcandy/providers/user_provider.dart';
 import 'package:raspcandy/widgets/logo.dart';
-
+import '../models/UserDataProvider.dart';
 import '../utils/message_util.dart';
 import '../widgets/button.dart';
 import '../widgets/candy_dispenser.dart';
@@ -110,7 +109,7 @@ class _UserLoginState extends State<UserLogin> {
         if(response.isNotEmpty){
           if(response['success']){
             Map? userResponse = response['user']!;
-            userData.setData(
+            Provider.of<UserDataProvider>(context, listen: false).setData(
               userResponse!['_id'], 
               userResponse['name'],
               userResponse['username'], 

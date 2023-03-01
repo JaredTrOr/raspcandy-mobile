@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:raspcandy/providers/dispenser_provider.dart';
 import 'package:raspcandy/providers/purchase_provider.dart';
 import 'package:raspcandy/utils/color_util.dart';
 import 'package:raspcandy/utils/message_util.dart';
 import 'package:raspcandy/widgets/button.dart';
 
-import '../../models/UserData.dart';
+import '../../models/UserDataProvider.dart';
 
 class UserHome extends StatefulWidget {
   const UserHome({super.key});
@@ -22,7 +23,6 @@ class _UserHomeState extends State<UserHome> {
 
   @override
   Widget build(BuildContext context) {
-  //final _screenSize = MediaQuery.of(context).size;
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -59,17 +59,16 @@ class _UserHomeState extends State<UserHome> {
               const CircleAvatar(
                 backgroundImage: AssetImage('assets/images/profile.png'),
               ),
-              Text(userData.username, style: const TextStyle(color: Colors.pink),)
+              Text(
+                Provider.of<UserDataProvider>(context).getUsername,
+                style: const TextStyle(color: Colors.pink)
+              )
             ],
           ),
-          onTap: () {
-            Navigator.pushNamed(context, 'user_profile');
-          },
+          onTap: ()  => Navigator.pushNamed(context, 'user_profile'),
         ),
         TextButton(
-          onPressed: () {
-            Navigator.pushReplacementNamed(context, 'user_login');
-          }, 
+          onPressed: () => Navigator.pushReplacementNamed(context, 'user_login'), 
           child: Text(
             'Cerrar sesión', 
             style: TextStyle(
@@ -86,10 +85,7 @@ class _UserHomeState extends State<UserHome> {
       future: dispenserProvider.getDispenserCandies(),
       initialData: {},
       builder: (BuildContext context, AsyncSnapshot<Map> snapshot) {
-        print(snapshot.data);
-        return Row(
-          children: _createCandyButtons(snapshot.data),
-        );
+        return Row(children: _createCandyButtons(snapshot.data),);
       },
     );
   }
@@ -177,6 +173,9 @@ class _UserHomeState extends State<UserHome> {
   }
   
   _purchaseCandy() async {
+    //Provider creating an object
+    final userDataProvider = Provider.of<UserDataProvider>(context, listen: false);
+
     //Print the values
     print('Tipo de dulce: $_candyValue');
     print('Tamaño: $_sizeValue');
@@ -193,7 +192,7 @@ class _UserHomeState extends State<UserHome> {
     String candyId = candyIdResponse['candy']!['_id']!;
     String candyName = candyIdResponse['candy']!['candy_name']!;
     String size = purchaseProvider.getSize(_sizeValue);
-    String userId = userData.id.isNotEmpty ? userData.id : 'usuario anonimo';
+    String userId = userDataProvider.getName.isNotEmpty ? userDataProvider.getId : 'usuario anónimo';
 
     //Make the purchase
     Map? response = await purchaseProvider.insertPurchase(candyId ,candyName ,size, userId);    

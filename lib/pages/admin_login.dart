@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:raspcandy/models/AdminData.dart';
+import 'package:provider/provider.dart';
 import 'package:raspcandy/providers/admin_provider.dart';
 
 import '../utils/message_util.dart';
@@ -18,8 +18,8 @@ class AdminLogin extends StatefulWidget {
 }
 
 class _AdminLoginState extends State<AdminLogin> {
-  TextEditingController usernameController = TextEditingController();
 
+  TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
   final formKey = GlobalKey<FormState>();
@@ -102,12 +102,11 @@ class _AdminLoginState extends State<AdminLogin> {
       alertMessage.displayMessage(context , () {
         if(response.isNotEmpty){
           if (response['success']) {
-            print('Response succesfuly');
             Map adminResponse = response['admin'];
             Map addressResponse = adminResponse['address'];
-            print(addressResponse);
 
-            adminData.setData(
+            /*
+            Provider.of<AdminDataProvider>(context, listen: false)(
               adminResponse['_id'], 
               adminResponse['name'],
               adminResponse['username'], 
@@ -117,10 +116,14 @@ class _AdminLoginState extends State<AdminLogin> {
               addressResponse['number'],
               addressResponse['place']
             );
+            */
             Navigator.pushReplacementNamed(context, 'admin_home');
           }
         }
       });
     }
   }
+}
+
+class AdminDataProvider {
 }

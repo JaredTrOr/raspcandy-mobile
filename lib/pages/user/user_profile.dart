@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:raspcandy/models/UserData.dart';
+import 'package:provider/provider.dart';
+import 'package:raspcandy/models/UserDataProvider.dart';
 import 'package:raspcandy/providers/purchase_provider.dart';
-import 'package:raspcandy/providers/user_provider.dart';
 import 'package:raspcandy/widgets/button.dart';
 
 class UserProfile extends StatelessWidget {
@@ -20,11 +20,11 @@ class UserProfile extends StatelessWidget {
                   //Logo
                   const Image(image: AssetImage('assets/images/profile.png')),
                   const SizedBox(height: 30),
-                  Text(userData.name, style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 20)),
+                  Text(Provider.of<UserDataProvider>(context).getName, style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 20)),
                   const SizedBox(height: 10),
-                  Text(userData.email, style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 20)),
+                  Text(Provider.of<UserDataProvider>(context).getEmail, style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 20)),
                   const SizedBox(height: 70),
-                  _showPurchasesAndFavCandy(),
+                  _showPurchasesAndFavCandy(context),
                   const SizedBox(height: 30),
                   Button(text: 'Editar perfil', pressedButton: () {
                     Navigator.pushNamed(context, 'user_edit');
@@ -38,7 +38,7 @@ class UserProfile extends StatelessWidget {
     );
   }
 
-  Widget _showPurchasesAndFavCandy(){
+  Widget _showPurchasesAndFavCandy(BuildContext context){
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -47,12 +47,13 @@ class UserProfile extends StatelessWidget {
             const Text('Pedidos', style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18)),
             const SizedBox(height: 10),
             FutureBuilder(
-              future: purchaseProvider.getUserAmountOfPurchases(userData.id),
+              future: purchaseProvider.getUserAmountOfPurchases(Provider.of<UserDataProvider>(context).getId),
               initialData: '',
               builder: (BuildContext context, AsyncSnapshot<String> snapshot){
                 return Text(
                   snapshot.data!, 
-                  style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 18));
+                  style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 18)
+                );
               }
             ),
           ],

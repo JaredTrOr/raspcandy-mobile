@@ -44,6 +44,26 @@ class UserProvider{
     }
   }
   
+  Future<Map> update(String id, String name, String username, String email, String password) async{
+    try{
+      Response response = await put(
+        Uri.parse('${dotenv.get('NGROK_URL', fallback: '')}/user/update'),
+        body: {
+          'id': id,
+          'name': name,
+          'username': username,
+          'email': email,
+          'password': password
+        }
+      );
+
+      Map responseMap = json.decode(response.body);
+      return responseMap;
+    }catch(err){
+      print('ERROR: $err');
+      return {};
+    }
+  }
 }
 
 final userProvider = UserProvider();
