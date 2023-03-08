@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:raspcandy/providers/dispenser_provider.dart';
+import 'package:raspcandy/providers/motor_provider.dart';
 import 'package:raspcandy/providers/purchase_provider.dart';
-import 'package:raspcandy/providers/user_provider.dart';
 import 'package:raspcandy/utils/color_util.dart';
 import 'package:raspcandy/utils/icon_util.dart';
 import 'package:raspcandy/utils/message_util.dart';
@@ -113,19 +113,6 @@ class _UserHomeState extends State<UserHome> {
     return listOfCandyButtons;
   }
 
-  Widget _portionButtons(){
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        _sizeButton(0, 'Chico'),
-        const SizedBox(height: 20,),
-        _sizeButton(1, 'Mediano'),
-        const SizedBox(height: 20,),
-        _sizeButton(2, 'Grande'),
-      ],
-    );
-  }
-
   Widget _candyButton(int flagValue, String image, String contentText){
     return  Column(
       children: [
@@ -149,6 +136,19 @@ class _UserHomeState extends State<UserHome> {
     );
   }
 
+  Widget _portionButtons(){
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        _sizeButton(0, 'Chico'),
+        const SizedBox(height: 20,),
+        _sizeButton(1, 'Mediano'),
+        const SizedBox(height: 20,),
+        _sizeButton(2, 'Grande'),
+      ],
+    );
+  }
+
   Widget _sizeButton(int flagValue, String contentText){
     return  Column(
       children: [
@@ -160,15 +160,15 @@ class _UserHomeState extends State<UserHome> {
             });
           },
           child: Container(
-              height: 100,
-              width: 100,
-              color: _sizeValue == flagValue ? Colors.black : Colors.transparent,
-              child: const Image(
-                image: AssetImage('assets/images/candy.png'),
-                width: 20.0,
-              ),
+            height: 100,
+            width: 100,
+            color: _sizeValue == flagValue ? Colors.black : Colors.transparent,
+            child: const Image(
+              image: AssetImage('assets/images/candy.png'),
+              width: 20.0,
             ),
           ),
+        ),
         const SizedBox(height: 10,),
         Text(contentText, style: const TextStyle(fontWeight: FontWeight.bold),)
       ],
@@ -190,7 +190,28 @@ class _UserHomeState extends State<UserHome> {
       }
     );
 
-    //Get the candyId 
+    //Move the motor
+    /*
+      Make the operation which moves the motor, once the motor has been moved
+      it is time to make the insertion to the database indicateing that the operation
+      and the purchase has been done succesfully.
+    */
+
+    
+    /*
+    if(await motorProvider.moveOperationalMotor(_candyValue, _sizeValue)){
+      print('The motor has been moved');
+      // ignore: use_build_context_synchronously
+      Navigator.of(context).pop();
+    }
+    else{
+      print('Motor didnt move');
+      // ignore: use_build_context_synchronously
+      Navigator.of(context).pop();
+    }*/
+    
+    //Make an if statement to check if the motor has been moved succesfuly
+    //Get all the candy and user information to make the purchase 
     Map? candyIdResponse = await dispenserProvider.getDispenserCandyByPosition(_candyValue);
     String candyId = candyIdResponse['candy']!['_id']!;
     String candyName = candyIdResponse['candy']!['candy_name']!;
@@ -198,14 +219,16 @@ class _UserHomeState extends State<UserHome> {
     String userId = userDataProvider.getName.isNotEmpty ? userDataProvider.getId : 'usuario anónimo';
 
     //Make the purchase
-    Map? response = await purchaseProvider.insertPurchase(candyId ,candyName ,size, userId);    
+    Map? response = await purchaseProvider.insertPurchase(candyId ,candyName ,size, userId); 
+
     // ignore: use_build_context_synchronously
     Navigator.of(context).pop();
-
+  
     //Display the message
     alertMessage.setAlertText = response;
     // ignore: use_build_context_synchronously
     alertMessage.displayMessage(context, () {});
+    
 
   }
 }

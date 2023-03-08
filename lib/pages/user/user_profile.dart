@@ -53,10 +53,22 @@ class UserProfile extends StatelessWidget {
               future: purchaseProvider.getUserAmountOfPurchases(Provider.of<UserDataProvider>(context).getId),
               initialData: '',
               builder: (BuildContext context, AsyncSnapshot<String> snapshot){
-                return Text(
-                  snapshot.data!, 
-                  style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 17)
-                );
+                switch(snapshot.connectionState){
+                  case ConnectionState.waiting: 
+                    return const Image(
+                      width: 30,
+                      image: AssetImage('assets/images/loading.gif'),
+                    );
+                  default:
+                    if (snapshot.hasError) {
+                      return Text('Error: ${snapshot.error}');
+                    } else {
+                      return Text(
+                        snapshot.data!, 
+                        style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 17)
+                      );
+                    }
+                }
               }
             ),
           ],
@@ -96,7 +108,19 @@ class UserProfile extends StatelessWidget {
       future: purchaseProvider.getUserPurchases(Provider.of<UserDataProvider>(context).getId),
       initialData: [],
       builder: (BuildContext context, AsyncSnapshot<List> snapshot){
-        return Column(children: _createPurchasesCards(snapshot.data));
+        switch(snapshot.connectionState){
+          case ConnectionState.waiting: 
+            return const Image(
+              width: 90,
+              image: AssetImage('assets/images/loading.gif'),
+            );
+          default:
+            if (snapshot.hasError) {
+              return Text('Error: ${snapshot.error}');
+            } else {
+              return Column(children: _createPurchasesCards(snapshot.data));
+            }
+        }
       }
     );
   }
