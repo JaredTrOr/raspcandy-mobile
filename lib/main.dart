@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
+import 'package:raspcandy/pages/admin/admin_admin_list.dart';
 import 'package:raspcandy/pages/admin/admin_home.dart';
+import 'package:raspcandy/pages/admin/admin_progile.dart';
+import 'package:raspcandy/pages/admin/admin_user_list.dart';
 import 'package:raspcandy/pages/admin_login.dart';
+import 'package:raspcandy/pages/candy/candy_home.dart';
 import 'package:raspcandy/pages/user/user_edit.dart';
 import 'package:raspcandy/pages/user/user_home.dart';
 import 'package:raspcandy/pages/user/user_profile.dart';
@@ -50,6 +54,10 @@ class MyApp extends StatelessWidget {
 
         //Admin pages
         'admin_home':(context) => const AdminHome(),
+        'admin_admin_profile':(context) => const AdminProfile(), 
+        'admin_user_list':(context) => const AdminUserList(),
+        'admin_admin_list':(context) => const AdminAdminList(),
+        'candy_home':(context) => const CandyHome()
       },
 
     );

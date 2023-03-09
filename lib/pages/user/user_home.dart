@@ -7,6 +7,8 @@ import 'package:raspcandy/utils/color_util.dart';
 import 'package:raspcandy/utils/icon_util.dart';
 import 'package:raspcandy/utils/message_util.dart';
 import 'package:raspcandy/widgets/button.dart';
+import 'package:raspcandy/widgets/logout_button.dart';
+import 'package:raspcandy/widgets/profile_icon.dart';
 
 import '../../models/UserDataProvider.dart';
 
@@ -55,33 +57,14 @@ class _UserHomeState extends State<UserHome> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        GestureDetector(
-          child: Column(
-            children: [
-              const CircleAvatar(
-                backgroundImage: AssetImage('assets/images/profile.png'),
-              ),
-              Text(
-                Provider.of<UserDataProvider>(context).getUsername,
-                style: const TextStyle(color: Colors.pink)
-              )
-            ],
-          ),
-          onTap: ()  => Navigator.pushNamed(context, 'user_profile'),
+        ProfileIcon(
+          text: Provider.of<UserDataProvider>(context).getUsername,
+          callback: () => Navigator.pushNamed(context, 'user_profile')
         ),
-        TextButton(
-          onPressed: () {
-            Provider.of<UserDataProvider>(context,listen: false).resetData();
-            Navigator.pushReplacementNamed(context, 'user_login');
-          }, 
-          child: Text(
-            'Cerrar sesión', 
-            style: TextStyle(
-              color: getColor('pink'),
-              fontWeight: FontWeight.bold
-            ),
-          )
-        )
+        LogoutButton(callback: () {
+          Provider.of<UserDataProvider>(context,listen: false).resetData();
+          Navigator.pushReplacementNamed(context, 'user_login');
+        })
       ],
     );
   }

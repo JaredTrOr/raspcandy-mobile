@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:raspcandy/models/AdministratorDataProvider.dart';
 import 'package:raspcandy/providers/admin_provider.dart';
 
 import '../utils/message_util.dart';
@@ -105,8 +106,8 @@ class _AdminLoginState extends State<AdminLogin> {
             Map adminResponse = response['admin'];
             Map addressResponse = adminResponse['address'];
 
-            /*
-            Provider.of<AdminDataProvider>(context, listen: false)(
+            
+            Provider.of<AdministratorDataProvider>(context, listen: false).setData(
               adminResponse['_id'], 
               adminResponse['name'],
               adminResponse['username'], 
@@ -116,9 +117,15 @@ class _AdminLoginState extends State<AdminLogin> {
               addressResponse['number'],
               addressResponse['place']
             );
-            */
+            
             Navigator.pushReplacementNamed(context, 'admin_home');
           }
+          else{
+            print('bad response');
+          }
+        }
+        else{
+          print('Empty response');
         }
       });
     }

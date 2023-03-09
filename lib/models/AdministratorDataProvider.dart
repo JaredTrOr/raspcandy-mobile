@@ -29,12 +29,38 @@ class AdministratorDataProvider extends ChangeNotifier{
     notifyListeners();
   }
 
-  String getId() => _id;
-  String getName() => _name;
-  String getUsername() => _username;
-  String getPassword() => _password;
-  String getEmail() => _email;
-  String getStreet() => _street;
-  String getNumber() => _number;
-  String getPlace() => _place;
+  void updateData(
+    String name, String username, String password, String email,
+    String street, String number, String place
+  ){
+    _name = name;
+    _username = username;
+    _password = password;
+    _email = email;
+    _street = street;
+    _number = number;
+    _place = place;
+    notifyListeners();
+  }
+
+  void resetData(){
+    _id = '';
+    _name = '';
+    _username = '';
+    _password = '';
+    _email = '';
+    _street = '';
+    _number = '';
+    _place = '';
+    notifyListeners();
+  }
+
+  String get getId => _id;
+  String get getName => _name;
+  String get getUsername => _username;
+  String get getPassword => _password;
+  String get getEmail => _email;
+  String get getStreet => _street;
+  String get getNumber => _number;
+  String get getPlace => _place;
 }
