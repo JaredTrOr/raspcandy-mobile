@@ -24,10 +24,15 @@ class AdminProvider{
   }
   
   Future<List<dynamic>> getUsers() async {
-
     try{
       Response response = await get(Uri.parse('${dotenv.get('NGROK_URL', fallback:'')}/admin/getUsers'));
-      Map? users = json.decode(response.body);
+      Map responseMap = json.decode(response.body);
+      if(responseMap.isNotEmpty){
+        List<dynamic> users = responseMap['users'];
+        return users; 
+      }else{
+        return [];
+      }
     }catch(e){
       print('Error: '+e.toString());
       return [];

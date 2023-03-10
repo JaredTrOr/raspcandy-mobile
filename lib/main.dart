@@ -3,7 +3,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:raspcandy/pages/admin/admin_admin_list.dart';
 import 'package:raspcandy/pages/admin/admin_home.dart';
-import 'package:raspcandy/pages/admin/admin_progile.dart';
+import 'package:raspcandy/pages/admin/admin_profile.dart';
 import 'package:raspcandy/pages/admin/admin_user_list.dart';
 import 'package:raspcandy/pages/admin_login.dart';
 import 'package:raspcandy/pages/candy/candy_home.dart';
