@@ -10,6 +10,7 @@ import 'package:raspcandy/widgets/input_password.dart';
 
 import '../../providers/user_provider.dart';
 import '../../utils/message_util.dart';
+import '../../widgets/back_button.dart';
 
 class UserEdit extends StatefulWidget {
   const UserEdit({super.key});
@@ -54,7 +55,7 @@ class _UserEditState extends State<UserEdit> {
                     const SizedBox(height: 30),
                     InputPassword(inputController: passwordController),
                     const SizedBox(height: 30),
-                    Button(text: 'Editar', pressedButton: _editUser,),
+                    Button(text: 'Editar', pressedButton: _editUser),
                   ],
                 ),
               ),
@@ -62,6 +63,7 @@ class _UserEditState extends State<UserEdit> {
           ),
         ),
       ),
+      floatingActionButton: FloatingBackButton(pressed: () => Navigator.pop(context)),
     );
   }
 

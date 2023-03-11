@@ -28,6 +28,17 @@ class PurchaseProvider{
     }
   }
 
+  Future<Map> getUserCandyPurchases(String id) async {
+    try{
+      Response response = await get(Uri.parse('${dotenv.get('NGROK_URL', fallback: '')}/purchase/getUserCandyPurchases/$id'));
+      Map mapResponse = json.decode(response.body);
+      return mapResponse;
+    }catch(err){
+      print('ERROR: $err');
+      return {};
+    }
+  }
+
   Future<Map> insertPurchase(String candyId,String candyName, String size, String userId) async {
     try{
       Response response = await post(

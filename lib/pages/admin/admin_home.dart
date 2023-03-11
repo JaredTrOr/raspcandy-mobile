@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:raspcandy/models/AdministratorDataProvider.dart';
 import 'package:raspcandy/widgets/profile_icon.dart';
 
+import '../../widgets/back_button.dart';
 import '../../widgets/logout_button.dart';
 
 class AdminHome extends StatelessWidget {
@@ -48,7 +49,7 @@ class AdminHome extends StatelessWidget {
             ),
           )
         ),
-      )
+      ),
     );
   }
 

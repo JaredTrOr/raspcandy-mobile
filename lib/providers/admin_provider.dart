@@ -38,6 +38,19 @@ class AdminProvider{
       return [];
     }
   }
+
+  Future<Map> getUserInformation(String? id) async {
+    try{
+      Response response = 
+      await get(Uri.parse('${dotenv.get('NGROK_URL', fallback: '')}/admin/getUserInformation/$id'));
+
+      Map responseMap = json.decode(response.body);
+      return responseMap['user'];
+    }catch(e){
+      print('Error: '+e.toString());
+      return {};
+    }
+  }
 }
 
 final adminProvider = AdminProvider();

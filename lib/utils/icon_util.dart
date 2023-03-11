@@ -17,6 +17,7 @@ final _icons = <String, IconData> {
   'alert': FontAwesomeIcons.circleExclamation,
   'candy': TablerIcons.lollipop,
   'arrow': Icons.keyboard_arrow_right,
+  'back': Icons.arrow_back
 };
 
 Icon getIcon(String iconName){

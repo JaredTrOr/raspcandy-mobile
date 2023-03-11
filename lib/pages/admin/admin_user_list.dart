@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:raspcandy/providers/admin_provider.dart';
 import 'package:raspcandy/providers/purchase_provider.dart';
+import 'package:raspcandy/providers/user_provider.dart';
+import 'package:raspcandy/utils/color_util.dart';
 import 'package:raspcandy/utils/icon_util.dart';
 import 'package:raspcandy/widgets/button.dart';
+
+import '../../models/UserDataProvider.dart';
+import '../../widgets/back_button.dart';
 
 class AdminUserList extends StatelessWidget {
   const AdminUserList({super.key});
@@ -17,7 +23,7 @@ class AdminUserList extends StatelessWidget {
               padding: const EdgeInsets.all(20),
               child: Column(
                 children: [
-                  const SizedBox(height: 50,),
+                  const SizedBox(height: 20,),
                   const Text(
                   'Usuarios',
                     style: TextStyle(
@@ -26,19 +32,22 @@ class AdminUserList extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 20,),
-                  Button(text: 'Crear usuario', pressedButton: () => Navigator.pushNamed(context, 'admin_user_create')),
+                  Button(text: 'Crear usuario', color: 'purple',pressedButton: () { 
+                    Navigator.pushNamed(context, 'admin_user_create');
+                  }),
                   const SizedBox(height: 20,),
-                  _userList()
+                  _userList(context)
                 ],
               ),
             ),
           )
         ),
-      )
+      ),
+      floatingActionButton: FloatingBackButton(pressed: () {Navigator.pop(context);}),
     );
   }
 
-  Widget _userList(){
+  Widget _userList(BuildContext context){
     return FutureBuilder(
       future: adminProvider.getUsers(),
       initialData: [],
@@ -53,14 +62,14 @@ class AdminUserList extends StatelessWidget {
             if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             } else {
-              return _createUserList(snapshot.data!);
+              return _createUserList(context,snapshot.data!);
             }
         }
       }
     );
   }
 
-  Widget _createUserList(List<dynamic> users) {
+  Widget _createUserList(BuildContext context, List<dynamic> users) {
     List<Widget> userArray = [];
 
     for (var user in users) {
@@ -68,8 +77,19 @@ class AdminUserList extends StatelessWidget {
         ListTile(
           leading: getCustomIcon('person', 30, 'primary'),
           title: Text('Nombre: ${user['name']}'),
-          subtitle: _createTextOfAmountOfCandies(user['_id']),
+          subtitle: Text('Email: ${user['email']}'),
           trailing: getCustomIcon('arrow', 25, 'primary'),
+          onTap: () {
+            Provider.of<UserDataProvider>(context, listen: false).setData(
+              user['_id'],
+              user['name'],
+              user['username'],
+              user['password'],
+              user['email']
+            );
+            // ignore: use_build_context_synchronously
+            Navigator.pushNamed(context, 'admin_user_profile');
+          },
         )
       );
     }
@@ -78,16 +98,5 @@ class AdminUserList extends StatelessWidget {
       children: userArray,
     );
   }
-
-  Widget _createTextOfAmountOfCandies(String id){
-    return FutureBuilder(
-      future: purchaseProvider.getUserAmountOfPurchases(id),
-      initialData: '',
-      builder: (BuildContext context, AsyncSnapshot<String> snapshot){
-          return Text('Dulces comprados: ${snapshot.data}');
-      }
-    );
-  }
-
   
 }

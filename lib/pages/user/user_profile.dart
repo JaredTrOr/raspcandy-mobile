@@ -6,6 +6,7 @@ import 'package:raspcandy/providers/purchase_provider.dart';
 import 'package:raspcandy/utils/color_util.dart';
 import 'package:raspcandy/widgets/button.dart';
 
+import '../../widgets/back_button.dart';
 import '../../widgets/container.dart';
 
 class UserProfile extends StatelessWidget {
@@ -38,6 +39,7 @@ class UserProfile extends StatelessWidget {
           ),
         ),
       ),
+      floatingActionButton: FloatingBackButton(pressed: () => Navigator.pop(context)),
     );
   }
 

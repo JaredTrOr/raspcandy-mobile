@@ -5,6 +5,7 @@ import 'package:raspcandy/pages/admin/admin_admin_list.dart';
 import 'package:raspcandy/pages/admin/admin_home.dart';
 import 'package:raspcandy/pages/admin/admin_profile.dart';
 import 'package:raspcandy/pages/admin/admin_user_list.dart';
+import 'package:raspcandy/pages/admin/admin_user_profile.dart';
 import 'package:raspcandy/pages/admin_login.dart';
 import 'package:raspcandy/pages/candy/candy_home.dart';
 import 'package:raspcandy/pages/user/user_edit.dart';
@@ -57,7 +58,8 @@ class MyApp extends StatelessWidget {
         'admin_admin_profile':(context) => const AdminProfile(), 
         'admin_user_list':(context) => const AdminUserList(),
         'admin_admin_list':(context) => const AdminAdminList(),
-        'candy_home':(context) => const CandyHome()
+        'candy_home':(context) => const CandyHome(),
+        'admin_user_profile':(context) => const AdminUserProfile(),
       },
 
     );
