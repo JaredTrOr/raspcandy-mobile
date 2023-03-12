@@ -74,7 +74,7 @@ class _UserRegisterState extends State<UserRegister> {
           const SizedBox(height: 20,),
           InputPassword(inputController: passwordController),
           const SizedBox(height: 20,),
-          Button(text: 'Registrarse', pressedButton: _registerButton),
+          Button(text: 'Registrarse', pressedButton: _registerButton, color: 'primary',),
           const SizedBox(height: 20,),
           const Text('¿Ya tienes una cuenta?', style: TextStyle(fontSize: 15)),
           TextButton(

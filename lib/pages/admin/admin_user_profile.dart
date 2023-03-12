@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:raspcandy/models/UserDataProvider.dart';
 import 'package:raspcandy/providers/purchase_provider.dart';
+import 'package:raspcandy/providers/user_provider.dart';
 import 'package:raspcandy/widgets/button.dart';
-
 import '../../widgets/back_button.dart';
 
 class AdminUserProfile extends StatelessWidget {
@@ -21,10 +21,24 @@ class AdminUserProfile extends StatelessWidget {
                 children: [
                    _profileCard(context),
                   const SizedBox(height: 15),
-                  Button(text: 'Editar usuario', color: 'orange',pressedButton: () {}),
-                  const SizedBox(height: 15,),
-                  Button(text: 'Borrar busuario', color: 'red',pressedButton: () {}),
                   _createCandyPurchaseCards(context),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Button(text: 'Editar', color: 'orange',width: 0.32 , pressedButton: () {
+                        Navigator.pushNamed(context, 'admin_user_edit');
+                      }),
+                      const SizedBox(width: 10,),
+                      Button(text: 'Borrar', color: 'delete', width: 0.32,pressedButton: () {
+                        showDialog(
+                          context: context, 
+                          builder: (BuildContext context){
+                            return _createAlertMessage(context);
+                          }
+                        );
+                      }),
+                    ],
+                  )
                 ],
               ),
             ),
@@ -86,16 +100,18 @@ class AdminUserProfile extends StatelessWidget {
 
     List<dynamic>? candyPurchases = data['candyPurchases'];
 
-    for(var candy in candyPurchases!){
-      cards.add(
-        _createCandyCards(
-          candy['typeOfCandy'], 
-          candy['small'].toString(), 
-          candy['medium'].toString(), 
-          candy['big'].toString()
-        )
-      );
-      cards.add(const SizedBox(height: 25,));
+    if(candyPurchases != null){
+      for(var candy in candyPurchases){
+        cards.add(
+          _createCandyCards(
+            candy['typeOfCandy'], 
+            candy['small'].toString(), 
+            candy['medium'].toString(), 
+            candy['big'].toString()
+          )
+        );
+        cards.add(const SizedBox(height: 25,));
+      }
     }
 
     return cards;
@@ -138,10 +154,44 @@ class AdminUserProfile extends StatelessWidget {
       ),
       child: card,
     );
+  }
 
+  Widget _createAlertMessage(BuildContext context){
+    return AlertDialog(
+      title: const Text('¿Estas seguro de borrar este usuario?'),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.pop(context);
+          }, 
+          child: const Text('Cancelar')
+        ),
+        TextButton(
+          child: const Text('Aceptar'),
+          onPressed: () async {
+            showDialog(
+              context: context,
+              builder: (context) {
+                return const Center(child: CircularProgressIndicator());
+              }
+            );
 
+            Map? response = await userProvider.deleteUser(Provider.of<UserDataProvider>(context, listen: false).getId);
+
+            if(response.isNotEmpty){
+              if(response['success']){
+                // ignore: use_build_context_synchronously
+                Navigator.of(context).pop(); //Circular progress indicator
+                // ignore: use_build_context_synchronously
+                Navigator.pop(context); //Close the screen
+              }
+            }
+          }, 
+        ),
+      ],
+    );
   }
 
 
-  //Text(Provider.of<UserDataProvider>(context).getName)
+
 }

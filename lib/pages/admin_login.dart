@@ -67,7 +67,7 @@ class _AdminLoginState extends State<AdminLogin> {
           const SizedBox(height: 20,),
           InputPassword(inputController: passwordController),
           const SizedBox(height: 20,),
-          Button(text: 'Iniciar sesión', pressedButton: _loginButton),
+          Button(text: 'Iniciar sesión', pressedButton: _loginButton, color: 'primary',),
           const SizedBox(height: 20,),
           TextButton(
             onPressed: (){

@@ -6,8 +6,9 @@ class Button extends StatelessWidget{
   final String text;
   final VoidCallback pressedButton;
   final String? color;
+  final double? width;
 
-  const Button({super.key, required this.text, required this.pressedButton, this.color});
+  const Button({super.key, required this.text, required this.pressedButton, this.color, this.width});
   
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,7 @@ class Button extends StatelessWidget{
       onPressed: pressedButton, 
       style: ElevatedButton.styleFrom(backgroundColor: getColor(color)),
       child: Container(
-        width: screenSize.width * 0.9,
+        width: width != null ? screenSize.width * width!.toDouble() : screenSize.width * 0.9,
         height: 60,
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(

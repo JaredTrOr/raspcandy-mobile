@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:raspcandy/providers/admin_provider.dart';
-import 'package:raspcandy/providers/purchase_provider.dart';
-import 'package:raspcandy/providers/user_provider.dart';
-import 'package:raspcandy/utils/color_util.dart';
 import 'package:raspcandy/utils/icon_util.dart';
 import 'package:raspcandy/widgets/button.dart';
 
@@ -12,7 +9,7 @@ import '../../widgets/back_button.dart';
 
 class AdminUserList extends StatelessWidget {
   const AdminUserList({super.key});
-
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,14 +22,14 @@ class AdminUserList extends StatelessWidget {
                 children: [
                   const SizedBox(height: 20,),
                   const Text(
-                  'Usuarios',
+                    'Usuarios',
                     style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold
                     ),
                   ),
                   const SizedBox(height: 20,),
-                  Button(text: 'Crear usuario', color: 'purple',pressedButton: () { 
+                  Button(text: 'Crear usuario', color: 'green',pressedButton: () { 
                     Navigator.pushNamed(context, 'admin_user_create');
                   }),
                   const SizedBox(height: 20,),
@@ -43,7 +40,7 @@ class AdminUserList extends StatelessWidget {
           )
         ),
       ),
-      floatingActionButton: FloatingBackButton(pressed: () {Navigator.pop(context);}),
+      floatingActionButton: FloatingBackButton(pressed: () => Navigator.pop(context)),
     );
   }
 

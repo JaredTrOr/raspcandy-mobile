@@ -64,6 +64,17 @@ class UserProvider{
       return {};
     }
   }
+
+  Future<Map> deleteUser(String id) async {
+    try{
+      Response response = await delete(Uri.parse('${dotenv.get('NGROK_URL', fallback: '')}/user/delete/$id'));
+      Map responseMap = json.decode(response.body);
+      return responseMap;
+    }catch(err){
+      print('ERROR $err');
+      return {};
+    }
+  }
 }
 
 final userProvider = UserProvider();

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:raspcandy/utils/color_util.dart';
 import 'package:raspcandy/utils/icon_util.dart';
 
 class FloatingBackButton extends StatelessWidget {
@@ -10,6 +11,7 @@ class FloatingBackButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
+      backgroundColor: getColor('primary'),
       onPressed: pressed,
       child: getIcon('back')
     );
