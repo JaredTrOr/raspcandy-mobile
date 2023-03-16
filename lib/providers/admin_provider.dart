@@ -51,6 +51,10 @@ class AdminProvider{
       return {};
     }
   }
+
+  void getUserInformationAfterDelete(String id) async {
+      await get(Uri.parse('${dotenv.get('NGROK_URL', fallback: '')}/admin/getUserInformation/$id'));
+  }
 }
 
 final adminProvider = AdminProvider();

@@ -67,6 +67,7 @@ class AdminUserList extends StatelessWidget {
   }
 
   Widget _createUserList(BuildContext context, List<dynamic> users) {
+    print('user list ');
     List<Widget> userArray = [];
 
     for (var user in users) {

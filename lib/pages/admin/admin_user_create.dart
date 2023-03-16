@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:raspcandy/providers/admin_provider.dart';
+import 'package:raspcandy/providers/purchase_provider.dart';
 import 'package:raspcandy/widgets/back_button.dart';
 
 import '../../providers/user_provider.dart';
@@ -106,6 +108,7 @@ class _AdminUserCreateState extends State<AdminUserCreate> {
         if(response.isNotEmpty) {
           if (response['success']) {
             Navigator.pop(context);
+            adminProvider.getUsers();
           }
         }
       });      
