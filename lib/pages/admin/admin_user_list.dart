@@ -33,7 +33,7 @@ class AdminUserList extends StatelessWidget {
                     Navigator.pushNamed(context, 'admin_user_create');
                   }),
                   const SizedBox(height: 20,),
-                  _userList(context)
+                  _userList(context) //I MADE A CHANGE HERE
                 ],
               ),
             ),
