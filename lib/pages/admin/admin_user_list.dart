@@ -1,15 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:raspcandy/models/user_list_provider.dart';
 import 'package:raspcandy/providers/admin_provider.dart';
 import 'package:raspcandy/utils/icon_util.dart';
 import 'package:raspcandy/widgets/button.dart';
 
-import '../../models/UserDataProvider.dart';
+import '../../models/user_data_provider.dart';
 import '../../widgets/back_button.dart';
 
-class AdminUserList extends StatelessWidget {
+class AdminUserList extends StatefulWidget {
   const AdminUserList({super.key});
- 
+
+  @override
+  State<AdminUserList> createState() => _AdminUserListState();
+}
+
+class _AdminUserListState extends State<AdminUserList> {
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchData();
+  }
+
+  Future<void> _fetchData() async {
+    final data = await adminProvider.getUsers();
+    setState(() {
+      userListProvider.setUserListData = data;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,25 +65,19 @@ class AdminUserList extends StatelessWidget {
   }
 
   Widget _userList(BuildContext context){
-    return FutureBuilder(
-      future: adminProvider.getUsers(),
-      initialData: [],
-      builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot){
-        switch(snapshot.connectionState){
-          case ConnectionState.waiting: 
-            return const Image(
-              width: 50,
-              image: AssetImage('assets/images/loading.gif'),
-            );
-          default:
-            if (snapshot.hasError) {
-              return Text('Error: ${snapshot.error}');
-            } else {
-              return _createUserList(context,snapshot.data!);
-            }
+    switch(userListProvider.getUserListData){
+      case null: 
+        return const Image(
+          width: 50,
+          image: AssetImage('assets/images/loading.gif'),
+        );
+      default:
+        if (userListProvider.getUserListData!.isEmpty) {
+          return const Text('There is no data to display');
+        } else {
+          return _createUserList(context,userListProvider.getUserListData!);
         }
-      }
-    );
+    }
   }
 
   Widget _createUserList(BuildContext context, List<dynamic> users) {
@@ -96,5 +110,4 @@ class AdminUserList extends StatelessWidget {
       children: userArray,
     );
   }
-  
 }

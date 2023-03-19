@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:raspcandy/models/AdministratorDataProvider.dart';
+import 'package:raspcandy/models/admin_data_provider.dart';
 import 'package:raspcandy/providers/admin_provider.dart';
 
 import '../utils/message_util.dart';

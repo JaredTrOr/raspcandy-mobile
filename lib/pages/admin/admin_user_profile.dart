@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:raspcandy/models/UserDataProvider.dart';
+import 'package:raspcandy/models/user_data_provider.dart';
 import 'package:raspcandy/providers/purchase_provider.dart';
 import 'package:raspcandy/providers/user_provider.dart';
 import 'package:raspcandy/widgets/button.dart';

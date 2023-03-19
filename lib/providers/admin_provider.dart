@@ -2,6 +2,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart';
 import 'dart:convert';
 
+import 'package:raspcandy/models/user_list_provider.dart';
+
 class AdminProvider{
 
   Future<Map> login(String username, String password) async {

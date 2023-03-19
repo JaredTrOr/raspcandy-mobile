@@ -16,8 +16,8 @@ import 'package:raspcandy/pages/user/user_profile.dart';
 import 'package:raspcandy/pages/user_login.dart';
 import 'package:raspcandy/pages/user_register.dart';
 
-import 'models/UserDataProvider.dart';
-import 'models/AdministratorDataProvider.dart';
+import 'models/user_data_provider.dart';
+import 'models/admin_data_provider.dart';
 
 Future<void> main() async{
   await dotenv.load(fileName: '.env');

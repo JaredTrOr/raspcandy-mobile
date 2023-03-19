@@ -10,7 +10,7 @@ import 'package:raspcandy/widgets/button.dart';
 import 'package:raspcandy/widgets/logout_button.dart';
 import 'package:raspcandy/widgets/profile_icon.dart';
 
-import '../../models/UserDataProvider.dart';
+import '../../models/user_data_provider.dart';
 
 class UserHome extends StatefulWidget {
   const UserHome({super.key});
