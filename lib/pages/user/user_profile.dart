@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:raspcandy/models/UserDataProvider.dart';
+import 'package:raspcandy/models/user_data_provider.dart';
 import 'package:raspcandy/providers/purchase_provider.dart';
 import 'package:raspcandy/utils/color_util.dart';
 import 'package:raspcandy/widgets/button.dart';

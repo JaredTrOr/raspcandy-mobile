@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:raspcandy/providers/user_provider.dart';
 import 'package:raspcandy/widgets/logo.dart';
-import '../models/UserDataProvider.dart';
+import '../models/user_data_provider.dart';
 import '../utils/message_util.dart';
 import '../widgets/button.dart';
 import '../widgets/candy_dispenser.dart';

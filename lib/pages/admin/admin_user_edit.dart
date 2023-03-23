@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:raspcandy/models/UserDataProvider.dart';
+import 'package:raspcandy/models/user_data_provider.dart';
 import 'package:raspcandy/widgets/button.dart';
 import 'package:raspcandy/widgets/container.dart';
 import 'package:raspcandy/widgets/input.dart';
@@ -63,7 +63,7 @@ class _AdminUserEditState extends State<AdminUserEdit> {
           ),
         ),
       ),
-      floatingActionButton: FloatingBackButton(pressed: () => Navigator.pushReplacementNamed(context, 'admin_user_profile')),
+      floatingActionButton: FloatingBackButton(pressed: () => Navigator.pop(context)),
     );
   }
 
@@ -103,7 +103,9 @@ class _AdminUserEditState extends State<AdminUserEdit> {
               passwordController.text.toString(), 
               emailController.text.toString()
             );
-            Navigator.pushReplacementNamed(context, 'admin_user_profile');
+            final setState = ModalRoute.of(context)?.settings.arguments as Function;
+            setState();
+            Navigator.pop(context);
           }
         }
       });

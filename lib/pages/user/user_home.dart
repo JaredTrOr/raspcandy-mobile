@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:raspcandy/providers/dispenser_provider.dart';
 import 'package:raspcandy/providers/motor_provider.dart';
-import 'package:raspcandy/providers/purchase_provider.dart';
 import 'package:raspcandy/utils/color_util.dart';
 import 'package:raspcandy/utils/icon_util.dart';
-import 'package:raspcandy/utils/message_util.dart';
 import 'package:raspcandy/widgets/button.dart';
 import 'package:raspcandy/widgets/logout_button.dart';
 import 'package:raspcandy/widgets/profile_icon.dart';
 
-import '../../models/UserDataProvider.dart';
+import '../../models/user_data_provider.dart';
+import '../../providers/purchase_provider.dart';
+import '../../utils/message_util.dart';
 
 class UserHome extends StatefulWidget {
   const UserHome({super.key});
@@ -74,7 +74,10 @@ class _UserHomeState extends State<UserHome> {
       future: dispenserProvider.getDispenserCandies(),
       initialData: {},
       builder: (BuildContext context, AsyncSnapshot<Map> snapshot) {
-        return Row(children: _createCandyButtons(snapshot.data),);
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: _createCandyButtons(snapshot.data)
+        );
       },
     );
   }
@@ -180,7 +183,6 @@ class _UserHomeState extends State<UserHome> {
       and the purchase has been done succesfully.
     */
 
-    
     /*
     if(await motorProvider.moveOperationalMotor(_candyValue, _sizeValue)){
       print('The motor has been moved');
@@ -192,12 +194,13 @@ class _UserHomeState extends State<UserHome> {
       // ignore: use_build_context_synchronously
       Navigator.of(context).pop();
     }*/
+
     
     //Make an if statement to check if the motor has been moved succesfuly
     //Get all the candy and user information to make the purchase 
     Map? candyIdResponse = await dispenserProvider.getDispenserCandyByPosition(_candyValue);
-    String candyId = candyIdResponse['candy']!['_id']!;
-    String candyName = candyIdResponse['candy']!['candy_name']!;
+    String candyId = candyIdResponse['candy']!['_id']!; //Dispenser id of the three candies
+    String candyName = candyIdResponse['candy']!['candy_name']!; //Unique name
     String size = purchaseProvider.getSize(_sizeValue);
     String userId = userDataProvider.getName.isNotEmpty ? userDataProvider.getId : 'usuario anónimo';
 

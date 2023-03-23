@@ -4,12 +4,33 @@ import 'package:raspcandy/providers/admin_provider.dart';
 import 'package:raspcandy/utils/icon_util.dart';
 import 'package:raspcandy/widgets/button.dart';
 
-import '../../models/UserDataProvider.dart';
+import '../../models/user_data_provider.dart';
 import '../../widgets/back_button.dart';
 
-class AdminUserList extends StatelessWidget {
+class AdminUserList extends StatefulWidget {
   const AdminUserList({super.key});
- 
+
+  @override
+  State<AdminUserList> createState() => _AdminUserListState();
+}
+
+class _AdminUserListState extends State<AdminUserList> {
+
+  List<dynamic>? userListData;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
+  Future<void> fetchData() async {
+    final data = await adminProvider.getUsers();
+    setState(() {
+      userListData = data;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,10 +51,10 @@ class AdminUserList extends StatelessWidget {
                   ),
                   const SizedBox(height: 20,),
                   Button(text: 'Crear usuario', color: 'green',pressedButton: () { 
-                    Navigator.pushNamed(context, 'admin_user_create');
+                    Navigator.pushNamed(context, 'admin_user_create', arguments: fetchData);
                   }),
                   const SizedBox(height: 20,),
-                  _userList(context)
+                  _userList(context) //I MADE A CHANGE HERE
                 ],
               ),
             ),
@@ -45,25 +66,19 @@ class AdminUserList extends StatelessWidget {
   }
 
   Widget _userList(BuildContext context){
-    return FutureBuilder(
-      future: adminProvider.getUsers(),
-      initialData: [],
-      builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot){
-        switch(snapshot.connectionState){
-          case ConnectionState.waiting: 
-            return const Image(
-              width: 50,
-              image: AssetImage('assets/images/loading.gif'),
-            );
-          default:
-            if (snapshot.hasError) {
-              return Text('Error: ${snapshot.error}');
-            } else {
-              return _createUserList(context,snapshot.data!);
-            }
+    switch(userListData){
+      case null: 
+        return const Image(
+          width: 50,
+          image: AssetImage('assets/images/loading.gif'),
+        );
+      default:
+        if (userListData!.isEmpty) {
+          return const Text('There is no data to display');
+        } else {
+          return _createUserList(context, userListData!);
         }
-      }
-    );
+    }
   }
 
   Widget _createUserList(BuildContext context, List<dynamic> users) {
@@ -86,7 +101,7 @@ class AdminUserList extends StatelessWidget {
               user['email']
             );
             // ignore: use_build_context_synchronously
-            Navigator.pushNamed(context, 'admin_user_profile');
+            Navigator.pushNamed(context, 'admin_user_profile', arguments: fetchData);
           },
         )
       );
@@ -96,5 +111,4 @@ class AdminUserList extends StatelessWidget {
       children: userArray,
     );
   }
-  
 }
