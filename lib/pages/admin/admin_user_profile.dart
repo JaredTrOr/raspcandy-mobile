@@ -11,7 +11,7 @@ class AdminUserProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('Main context: ${context.hashCode}');
+    final setState = ModalRoute.of(context)?.settings.arguments as Function;
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -27,14 +27,13 @@ class AdminUserProfile extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Button(text: 'Editar', color: 'orange',width: 0.32 , pressedButton: () {
-                        Navigator.pushReplacementNamed(context, 'admin_user_edit');
+                        Navigator.pushNamed(context, 'admin_user_edit', arguments: setState);
                       }),
                       const SizedBox(width: 10,),
                       Button(text: 'Borrar', color: 'delete', width: 0.32,pressedButton: () {
                         showDialog(
                           context: context, 
                           builder: (BuildContext contextDialog){
-                            print('Show dialog context: ${contextDialog.hashCode}');
                             return _createAlertMessage(context, contextDialog);
                           }
                         );
@@ -159,8 +158,6 @@ class AdminUserProfile extends StatelessWidget {
   }
 
   Widget _createAlertMessage(BuildContext context, BuildContext contextDialog){
-    print('Create alert message MAIN CONTEXT: ${context.hashCode}');
-    print('Create alert message SHOW DIALOG CONTEXT: ${contextDialog.hashCode}');
     return AlertDialog(
       title: const Text('¿Estas seguro de borrar este usuario?'),
       actions: [
@@ -190,6 +187,9 @@ class AdminUserProfile extends StatelessWidget {
                 Navigator.of(contextDialog).pop(); //Close the screen
                 // ignore: use_build_context_synchronously
                 Navigator.of(context).pop();
+                // ignore: use_build_context_synchronously
+                final setState = ModalRoute.of(context)?.settings.arguments as Function;
+                setState();
               }
             }
           }, 

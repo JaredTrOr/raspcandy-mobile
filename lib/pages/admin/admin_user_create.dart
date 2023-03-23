@@ -30,6 +30,7 @@ class _AdminUserCreateState extends State<AdminUserCreate> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -107,8 +108,9 @@ class _AdminUserCreateState extends State<AdminUserCreate> {
       alertMessage.displayMessage(context, (){
         if(response.isNotEmpty) {
           if (response['success']) {
+            final setState = ModalRoute.of(context)?.settings.arguments as Function;
             Navigator.pop(context);
-            adminProvider.getUsers();
+            setState();
           }
         }
       });      

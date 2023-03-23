@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:raspcandy/models/user_list_provider.dart';
 import 'package:raspcandy/providers/admin_provider.dart';
 import 'package:raspcandy/utils/icon_util.dart';
 import 'package:raspcandy/widgets/button.dart';
@@ -17,16 +16,18 @@ class AdminUserList extends StatefulWidget {
 
 class _AdminUserListState extends State<AdminUserList> {
 
+  List<dynamic>? userListData;
+
   @override
   void initState() {
     super.initState();
-    _fetchData();
+    fetchData();
   }
 
-  Future<void> _fetchData() async {
+  Future<void> fetchData() async {
     final data = await adminProvider.getUsers();
     setState(() {
-      userListProvider.setUserListData = data;
+      userListData = data;
     });
   }
 
@@ -50,7 +51,7 @@ class _AdminUserListState extends State<AdminUserList> {
                   ),
                   const SizedBox(height: 20,),
                   Button(text: 'Crear usuario', color: 'green',pressedButton: () { 
-                    Navigator.pushNamed(context, 'admin_user_create');
+                    Navigator.pushNamed(context, 'admin_user_create', arguments: fetchData);
                   }),
                   const SizedBox(height: 20,),
                   _userList(context) //I MADE A CHANGE HERE
@@ -65,17 +66,17 @@ class _AdminUserListState extends State<AdminUserList> {
   }
 
   Widget _userList(BuildContext context){
-    switch(userListProvider.getUserListData){
+    switch(userListData){
       case null: 
         return const Image(
           width: 50,
           image: AssetImage('assets/images/loading.gif'),
         );
       default:
-        if (userListProvider.getUserListData!.isEmpty) {
+        if (userListData!.isEmpty) {
           return const Text('There is no data to display');
         } else {
-          return _createUserList(context,userListProvider.getUserListData!);
+          return _createUserList(context, userListData!);
         }
     }
   }
@@ -100,7 +101,7 @@ class _AdminUserListState extends State<AdminUserList> {
               user['email']
             );
             // ignore: use_build_context_synchronously
-            Navigator.pushNamed(context, 'admin_user_profile');
+            Navigator.pushNamed(context, 'admin_user_profile', arguments: fetchData);
           },
         )
       );
