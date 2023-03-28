@@ -57,6 +57,23 @@ class AdminProvider{
   void getUserInformationAfterDelete(String id) async {
       await get(Uri.parse('${dotenv.get('NGROK_URL', fallback: '')}/admin/getUserInformation/$id'));
   }
+
+  Future<List<dynamic>> getAdmins() async {
+    try{
+      Response response = await get(Uri.parse('${dotenv.get('NGROK_URL', fallback:'')}/admin/getAdmins'));
+      Map responseMap = json.decode(response.body);
+      if(responseMap.isNotEmpty){
+        List<dynamic> admins = responseMap['admins'];
+        return admins; 
+      }else{
+        return [];
+      }
+    }catch(e){
+      print('Error: '+e.toString());
+      return [];
+    }
+  }
+
 }
 
 final adminProvider = AdminProvider();

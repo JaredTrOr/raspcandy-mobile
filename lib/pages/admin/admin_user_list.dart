@@ -21,7 +21,9 @@ class _AdminUserListState extends State<AdminUserList> {
   @override
   void initState() {
     super.initState();
-    fetchData();
+    Future.delayed(Duration.zero, ()async{
+      await fetchData();
+    });
   }
 
   Future<void> fetchData() async {
