@@ -76,10 +76,31 @@ class UserProfile extends StatelessWidget {
           ],
         ),
         Column(
-          children: const [
-            Text('Dulce Favorito', style: TextStyle(fontWeight: FontWeight.w500, fontSize: 17)),
-            SizedBox(height: 10),
-            Text('In process ...', style: TextStyle(fontWeight: FontWeight.w400, fontSize: 17)),
+          children: [
+            const Text('Dulce Favorito', style: TextStyle(fontWeight: FontWeight.w500, fontSize: 17)),
+            const SizedBox(height: 10),
+            FutureBuilder(
+              future: purchaseProvider.getUserAmountOfPurchases(Provider.of<UserDataProvider>(context).getId),
+              initialData: '',
+              builder: (BuildContext context, AsyncSnapshot<String> snapshot){
+                switch(snapshot.connectionState){
+                  case ConnectionState.waiting: 
+                    return const Image(
+                      width: 30,
+                      image: AssetImage('assets/images/loading.gif'),
+                    );
+                  default:
+                    if (snapshot.hasError) {
+                      return Text('Error: ${snapshot.error}');
+                    } else {
+                      return Text(
+                        snapshot.data!, 
+                        style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 17)
+                      );
+                    }
+                }
+              }
+            ),
           ],
         ),
 

@@ -4,6 +4,24 @@ import 'dart:convert';
 
 class UserProvider{
 
+  Future<String> getFavoriteCandy(String id) async {
+
+    String favCandyMessage = '';
+
+    try{
+      Response response = await get(Uri.parse('${dotenv.get('NGROK_URL', fallback: '')}/user/favoriteCandy/$id'));
+      Map responseMap = json.decode(response.body);
+
+      favCandyMessage = responseMap['favorite_candy'] == '' ? 'Aún no hay favorito :c' : responseMap['favorite_candy'];
+
+      return favCandyMessage;
+
+    }catch(e){
+      print('Error: '+e.toString());
+      return '';
+    }
+  }
+
   Future<Map> register(String name, String username, String email, String password) async{
     try{
       Response response = await post(
@@ -75,6 +93,7 @@ class UserProvider{
       return {};
     }
   }
+
 }
 
 final userProvider = UserProvider();
