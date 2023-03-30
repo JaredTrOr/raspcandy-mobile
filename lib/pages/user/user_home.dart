@@ -88,7 +88,7 @@ class _UserHomeState extends State<UserHome> {
     List<Widget> listOfCandyButtons = [];
 
     var i = 0;
-  
+
     candyDispenserList?.forEach((candy) {
       
       listOfCandyButtons.add(_candyButton(i, 'candy', candy['candy_name']));
@@ -183,7 +183,7 @@ class _UserHomeState extends State<UserHome> {
       and the purchase has been done succesfully.
     */
 
-    /*
+    //MOVE THE MOTOR AND MAKE THE PURCHASE
     if(await motorProvider.moveOperationalMotor(_candyValue, _sizeValue)){
       
       print('The motor has been moved');
@@ -214,8 +214,10 @@ class _UserHomeState extends State<UserHome> {
       // ignore: use_build_context_synchronously
       Navigator.of(context).pop();
     }
-    */
+    
 
+    //ONLY MAKE THE PURCHASE
+    /*
     //Make an if statement to check if the motor has been moved succesfuly
       //Get all the candy and user information to make the purchase 
       Map? candyIdResponse = await dispenserProvider.getDispenserCandyByPosition(_candyValue); //WTF
@@ -234,5 +236,6 @@ class _UserHomeState extends State<UserHome> {
       alertMessage.setAlertText = response;
       // ignore: use_build_context_synchronously
       alertMessage.displayMessage(context, () {});
+    */
   }
 }
