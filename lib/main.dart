@@ -9,7 +9,7 @@ import 'package:raspcandy/pages/admin/admin_user_edit.dart';
 import 'package:raspcandy/pages/admin/admin_user_list.dart';
 import 'package:raspcandy/pages/admin/admin_user_profile.dart';
 import 'package:raspcandy/pages/admin_login.dart';
-import 'package:raspcandy/pages/candy/candy_home.dart';
+import 'package:raspcandy/pages/compras/purchases_list.dart';
 import 'package:raspcandy/pages/user/user_edit.dart';
 import 'package:raspcandy/pages/user/user_home.dart';
 import 'package:raspcandy/pages/user/user_profile.dart';
@@ -63,7 +63,9 @@ class MyApp extends StatelessWidget {
         'admin_user_profile':(context) => const AdminUserProfile(),
         'admin_user_create':(context) => const AdminUserCreate(),
         'admin_user_edit':(context) => const AdminUserEdit(),
-        'candy_home':(context) => const CandyHome(),
+
+        //Purchases
+        'purchases_list':(context) => const PurchasesList(),
       },
 
     );

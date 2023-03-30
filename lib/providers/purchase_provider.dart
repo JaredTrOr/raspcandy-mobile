@@ -4,6 +4,18 @@ import 'package:http/http.dart';
 
 class PurchaseProvider{
 
+  Future<List> getPurchases() async {
+    try{
+      Response response = await get(Uri.parse('${dotenv.get('NGROK_URL', fallback: '')}/purchase/getPurchases'));
+      Map mapResponse = json.decode(response.body);
+      List purchases = mapResponse['purchases'];
+      return purchases;
+    }catch(err){
+      print('ERROR: $err');
+      return [];
+    }
+  }
+
   Future<List> getUserPurchases(String id) async {
     try{
       Response response = await get(Uri.parse('${dotenv.get('NGROK_URL', fallback: '')}/purchase/getUserPurchase/$id'));

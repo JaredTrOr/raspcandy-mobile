@@ -41,9 +41,9 @@ class AdminHome extends StatelessWidget {
                 ),
                 const SizedBox(height: 30,),
                 _createOptionCard(
-                  'assets/images/candy_option_image.png', 
-                  'Dulcería', 
-                  () => Navigator.pushNamed(context, 'candy_home')
+                  'assets/images/purchases_image.jpeg', 
+                  'Compras', 
+                  () => Navigator.pushNamed(context, 'purchases_list')
                 ),
               ],
             ),
@@ -77,6 +77,7 @@ class AdminHome extends StatelessWidget {
             child: Image(
             image: AssetImage(image),
             height: 130,
+            width: 400,
             fit: BoxFit.fill,  
           ),
         ),
