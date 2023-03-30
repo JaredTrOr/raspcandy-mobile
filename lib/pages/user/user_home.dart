@@ -183,14 +183,12 @@ class _UserHomeState extends State<UserHome> {
       and the purchase has been done succesfully.
     */
 
-    
+    /*
     if(await motorProvider.moveOperationalMotor(_candyValue, _sizeValue)){
       
       print('The motor has been moved');
       // ignore: use_build_context_synchronously
       Navigator.of(context).pop();
-
-      //DAM BRO
 
       //Make an if statement to check if the motor has been moved succesfuly
       //Get all the candy and user information to make the purchase 
@@ -210,14 +208,31 @@ class _UserHomeState extends State<UserHome> {
       alertMessage.setAlertText = response;
       // ignore: use_build_context_synchronously
       alertMessage.displayMessage(context, () {});
-
-
     }
     else{
       print('Motor didnt move');
       // ignore: use_build_context_synchronously
       Navigator.of(context).pop();
     }
+    */
 
+    //Make an if statement to check if the motor has been moved succesfuly
+      //Get all the candy and user information to make the purchase 
+      Map? candyIdResponse = await dispenserProvider.getDispenserCandyByPosition(_candyValue); //WTF
+      String candyId = candyIdResponse['candy']!['_id']!; //Dispenser id of the three candies
+      String candyName = candyIdResponse['candy']!['candy_name']!; //Unique name
+      String size = purchaseProvider.getSize(_sizeValue);
+      String userId = userDataProvider.getName.isNotEmpty ? userDataProvider.getId : 'usuario anónimo';
+
+      //Make the purchase
+      Map? response = await purchaseProvider.insertPurchase(candyId ,candyName ,size, userId); 
+
+      // ignore: use_build_context_synchronously
+      Navigator.of(context).pop();
+    
+      //Display the message
+      alertMessage.setAlertText = response;
+      // ignore: use_build_context_synchronously
+      alertMessage.displayMessage(context, () {});
   }
 }
