@@ -102,7 +102,7 @@ class _AdminAdminEditState extends State<AdminAdminEdit> {
       );
 
       Map? response = await adminProvider.editAdmin(
-        Provider.of<UserDataProvider>(context, listen: false).getId,
+        Provider.of<AdministratorDataProvider>(context, listen: false).getId,
         nameController.text.toString(),
         userController.text.toString(),
         emailController.text.toString(),
@@ -124,6 +124,7 @@ class _AdminAdminEditState extends State<AdminAdminEdit> {
           if (response['success']) {
             //SET THE DATA AGAIN WHEN THE USER IS BEING UPLOADED
             Provider.of<AdministratorDataProvider>(context, listen: false).updateData(
+              
               nameController.text.toString(), 
               userController.text.toString(), 
               passwordController.text.toString(), 

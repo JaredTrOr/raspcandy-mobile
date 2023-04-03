@@ -30,8 +30,8 @@ class AdministratorDataProvider extends ChangeNotifier{
   }
 
   void updateData(
-    String name, String username, String password, String email,
-    String street, String number, String place
+    String name, String username, String password, 
+    String email, String street, String number, String place
   ){
     _name = name;
     _username = username;
