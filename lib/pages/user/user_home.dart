@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:raspcandy/providers/dispenser_provider.dart';
-import 'package:raspcandy/providers/motor_provider.dart';
+import 'package:raspcandy/providers/motor_provider.dart'; //Motor functionallity
 import 'package:raspcandy/utils/color_util.dart';
 import 'package:raspcandy/utils/icon_util.dart';
 import 'package:raspcandy/widgets/button.dart';
@@ -182,7 +182,7 @@ class _UserHomeState extends State<UserHome> {
       it is time to make the insertion to the database indicateing that the operation
       and the purchase has been done succesfully.
     */
-
+    /*
     //MOVE THE MOTOR AND MAKE THE PURCHASE
     if(await motorProvider.moveOperationalMotor(_candyValue, _sizeValue)){
       
@@ -214,28 +214,27 @@ class _UserHomeState extends State<UserHome> {
       // ignore: use_build_context_synchronously
       Navigator.of(context).pop();
     }
-    
+    */
 
     //ONLY MAKE THE PURCHASE
-    /*
-    //Make an if statement to check if the motor has been moved succesfuly
-      //Get all the candy and user information to make the purchase 
-      Map? candyIdResponse = await dispenserProvider.getDispenserCandyByPosition(_candyValue); //WTF
-      String candyId = candyIdResponse['candy']!['_id']!; //Dispenser id of the three candies
-      String candyName = candyIdResponse['candy']!['candy_name']!; //Unique name
-      String size = purchaseProvider.getSize(_sizeValue);
-      String userId = userDataProvider.getName.isNotEmpty ? userDataProvider.getId : 'usuario anónimo';
-
-      //Make the purchase
-      Map? response = await purchaseProvider.insertPurchase(candyId ,candyName ,size, userId); 
-
-      // ignore: use_build_context_synchronously
-      Navigator.of(context).pop();
     
-      //Display the message
-      alertMessage.setAlertText = response;
-      // ignore: use_build_context_synchronously
-      alertMessage.displayMessage(context, () {});
-    */
+    //Make an if statement to check if the motor has been moved succesfuly
+    //Get all the candy and user information to make the purchase 
+    Map? candyIdResponse = await dispenserProvider.getDispenserCandyByPosition(_candyValue); //WTF
+    String candyId = candyIdResponse['candy']!['_id']!; //Dispenser id of the three candies
+    String candyName = candyIdResponse['candy']!['candy_name']!; //Unique name
+    String size = purchaseProvider.getSize(_sizeValue);
+    String userId = userDataProvider.getName.isNotEmpty ? userDataProvider.getId : 'usuario anónimo';
+
+    //Make the purchase
+    Map? response = await purchaseProvider.insertPurchase(candyId ,candyName ,size, userId); 
+    // ignore: use_build_context_synchronously
+    Navigator.of(context).pop();
+  
+    //Display the message
+    alertMessage.setAlertText = response;
+    // ignore: use_build_context_synchronously
+    alertMessage.displayMessage(context, () {});
+    
   }
 }
