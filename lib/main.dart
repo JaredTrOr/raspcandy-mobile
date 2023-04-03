@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
+import 'package:raspcandy/pages/admin/admin_admin_create.dart';
+import 'package:raspcandy/pages/admin/admin_admin_edit.dart';
 import 'package:raspcandy/pages/admin/admin_admin_list.dart';
 import 'package:raspcandy/pages/admin/admin_home.dart';
 import 'package:raspcandy/pages/admin/admin_admin_profile.dart';
@@ -57,12 +59,16 @@ class MyApp extends StatelessWidget {
 
         //Admin pages
         'admin_home':(context) => const AdminHome(),
-        'admin_admin_profile':(context) => const AdminProfile(), 
+        //Manage users as admin
         'admin_user_list':(context) => const AdminUserList(),
-        'admin_admin_list':(context) => const AdminAdminList(),
         'admin_user_profile':(context) => const AdminUserProfile(),
         'admin_user_create':(context) => const AdminUserCreate(),
         'admin_user_edit':(context) => const AdminUserEdit(),
+        //Manage admins as admin
+        'admin_admin_list':(context) => const AdminAdminList(),
+        'admin_admin_profile':(context) => const AdminProfile(), 
+        'admin_admin_create':(context) => const AdminAdminCreate(),
+        'admin_admin_edit':(context) => const AdminAdminEdit(),
 
         //Purchases
         'purchases_list':(context) => const PurchasesList(),

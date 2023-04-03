@@ -53,7 +53,7 @@ class _AdminAdminListState extends State<AdminAdminList> {
                   ),
                   const SizedBox(height: 20,),
                   Button(text: 'Crear administrador', color: 'green',pressedButton: () { 
-                    Navigator.pushNamed(context, 'admin_user_create', arguments: fetchData);
+                    Navigator.pushNamed(context, 'admin_admin_create', arguments: fetchData);
                   }),
                   const SizedBox(height: 20,),
                   _adminList(context) //I MADE A CHANGE HERE

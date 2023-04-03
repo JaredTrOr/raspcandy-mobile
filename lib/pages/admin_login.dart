@@ -131,6 +131,3 @@ class _AdminLoginState extends State<AdminLogin> {
     }
   }
 }
-
-class AdminDataProvider {
-}

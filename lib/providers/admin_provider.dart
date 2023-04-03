@@ -76,13 +76,6 @@ class AdminProvider{
     String name, String username, String email, 
     String password, String street, String number, String place
   ) async{
-
-    Set<String> address = {
-      'street', street,
-      'number', number,
-      'place',place
-    };
-    
     try{
       Response response = await post(
         Uri.parse('${dotenv.get('NGROK_URL', fallback: '')}/admin/createAdmin'),
@@ -91,7 +84,9 @@ class AdminProvider{
           'username': username,
           'email': email,
           'password': password,
-          'address': address
+          'street': street,
+          'number': number,
+          'place': place
         }
       );
 
@@ -109,12 +104,6 @@ class AdminProvider{
     String password, String street, String number, String place
   ) async{
 
-    Set<String> address = {
-      'street', street,
-      'number', number,
-      'place',place
-    };
-
     try{
       Response response = await put(
         Uri.parse('${dotenv.get('NGROK_URL', fallback: '')}/admin/updateAdmin'),
@@ -124,7 +113,9 @@ class AdminProvider{
           'username': username,
           'email': email,
           'password': password,
-          'address': address
+          'street': street,
+          'number': number,
+          'place': place
         }
       );
 

@@ -22,12 +22,12 @@ class AdminProfile extends StatelessWidget {
               child: Column(
                 children: [
                    _profileCard(context),
-                  const SizedBox(height: 15),
+                  const SizedBox(height:50),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Button(text: 'Editar', color: 'orange',width: 0.32 , pressedButton: () {
-                        Navigator.pushNamed(context, 'admin_user_edit', arguments: setState);
+                        Navigator.pushNamed(context, 'admin_admin_edit', arguments: setState);
                       }),
                       const SizedBox(width: 10,),
                       Button(text: 'Borrar', color: 'delete', width: 0.32,pressedButton: () {
@@ -51,15 +51,27 @@ class AdminProfile extends StatelessWidget {
   }
 
   Widget _profileCard(BuildContext context){
+
+    final adminProvider = Provider.of<AdministratorDataProvider>(context);
+
     return Column(
       children: [
         const Image(image: AssetImage('assets/images/profile.png')),
         const SizedBox(height: 30),
-        Text(Provider.of<AdministratorDataProvider>(context).getName, style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 18)),
+        Text(adminProvider.getName, style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 18)),
         const SizedBox(height: 15),
-        Text(Provider.of<AdministratorDataProvider>(context).getUsername, style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 18)),
+        Text(adminProvider.getUsername, style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 18)),
         const SizedBox(height: 15),
-        Text(Provider.of<AdministratorDataProvider>(context).getEmail, style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 18)),
+        Text(adminProvider.getEmail, style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 18)),
+        const SizedBox(height: 20),
+        const Text('Dirección', style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20)),
+        const SizedBox(height: 15),
+        Text('Calle: ${adminProvider.getStreet}', style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 18)),
+        const SizedBox(height: 15),
+        Text('Número: ${adminProvider.getNumber}', style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 18)),
+        const SizedBox(height: 15),
+        Text('Localidad: ${adminProvider.getPlace}', style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 18)),
+
       ],
     );
   }
