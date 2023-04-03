@@ -56,9 +56,9 @@ class AdminProvider{
       await get(Uri.parse('${dotenv.get('NGROK_URL', fallback: '')}/admin/getUserInformation/$id'));
   }
 
-  Future<List<dynamic>> getAdmins() async {
+  Future<List<dynamic>> getAdmins(String id) async {
     try{
-      Response response = await get(Uri.parse('${dotenv.get('NGROK_URL', fallback:'')}/admin/getAdmins'));
+      Response response = await get(Uri.parse('${dotenv.get('NGROK_URL', fallback:'')}/admin/getAdmins/$id'));
       Map responseMap = json.decode(response.body);
       if(responseMap.isNotEmpty){
         List<dynamic> admins = responseMap['admins'];

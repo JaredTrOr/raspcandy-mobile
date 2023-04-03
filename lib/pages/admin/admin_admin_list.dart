@@ -27,7 +27,7 @@ class _AdminAdminListState extends State<AdminAdminList> {
   }
 
   Future<void> fetchData() async {
-    final data = await adminProvider.getAdmins(); //Get administrators
+    final data = await adminProvider.getAdmins(Provider.of<AdministratorDataProvider>(context, listen: false).getId); //Get administrators
     setState(() {
       adminListData = data;
     });

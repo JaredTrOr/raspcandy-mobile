@@ -26,11 +26,15 @@ class UserDataProvider extends ChangeNotifier{
     notifyListeners();
   }
 
-  void updateData(String name, String username, String password, String email){
+  void updateData(String name, String username, String email){
     _name = name;
     _username = username;
-    _password = password;
     _email = email;
+    notifyListeners();
+  }
+
+  void changePassword(String password) {
+    _password = password;
     notifyListeners();
   }
 
