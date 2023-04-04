@@ -40,6 +40,7 @@ class AlertMessageUtil {
         color = 'orange';
       }
 
+      print(response['msg']);
       content = response['msg'];
     } else {
       image = 'error';

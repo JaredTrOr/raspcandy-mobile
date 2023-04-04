@@ -59,7 +59,7 @@ class AdminHome extends StatelessWidget {
       children: [
         ProfileIcon(
           text: Provider.of<AdministratorDataProvider>(context).getUsername,
-          callback: () => Navigator.pushReplacementNamed(context, 'admin_admin_profile')
+          callback: () => Navigator.pushNamed(context, 'admin_profile')
         ),
         LogoutButton(callback: () {
           Provider.of<AdministratorDataProvider>(context, listen: false).resetData();

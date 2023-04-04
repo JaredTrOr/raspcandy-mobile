@@ -101,7 +101,7 @@ class AdminProvider{
 
   Future<Map> editAdmin(
     String id, String name, String username, String email, 
-    String password, String street, String number, String place
+    String street, String number, String place
   ) async{
 
     try{
@@ -112,10 +112,27 @@ class AdminProvider{
           'name': name,
           'username': username,
           'email': email,
-          'password': password,
           'street': street,
           'number': number,
           'place': place
+        }
+      );
+
+      Map responseMap = json.decode(response.body);
+      return responseMap;
+    }catch(err){
+      print('ERROR: $err');
+      return {};
+    }
+  }
+
+  Future<Map> changePassword(String id, String password) async {
+    try{
+      Response response = await put(
+        Uri.parse('${dotenv.get('NGROK_URL', fallback: '')}/admin/changePassword'),
+        body: {
+          'id': id,
+          'password': password,
         }
       );
 
